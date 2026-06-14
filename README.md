@@ -10,6 +10,17 @@
 
 ---
 
+
+## Data Sources — Live vs Demo
+
+This platform runs in two modes, and it is explicit about which one is active at all times (status indicator, top-right).
+
+**LIVE mode** — Click **Connect Live Feed** and paste a free [AISStream.io](https://aisstream.io) API key. The app opens a real WebSocket to `wss://stream.aisstream.io/v0/stream`, subscribes to a global bounding box, and parses live AIS `PositionReport` and `ShipStaticData` messages. These are **real vessels broadcasting their real positions** over the global AIS network — actual ships, actual coordinates, actual names, updating live.
+
+**DEMO mode** (default) — With no key entered, the platform runs a high-fidelity simulation: 500 vessels moving along real-world shipping lanes with synthetic anomaly injection. This is clearly labeled **SIMULATED / DEMO** in the UI and the KPI source indicator. It exists so the platform is fully explorable without requiring anyone to sign up for anything.
+
+**Why bring-your-own-key?** This is a static page hosted on GitHub Pages with no backend. Embedding a shared API key in client code would expose it publicly. The honest, secure architecture is: each user supplies their own free key, it lives only in browser memory, and it is transmitted only to AISStream — never stored, logged, or committed to this repo.
+
 ## What Is This
 
 POSEIDON is a full-stack maritime domain awareness platform built entirely in React, with zero mapping library dependencies. It ingests AIS (Automatic Identification System) vessel telemetry — either live or from a high-fidelity mock feed — processes it through a custom spatial analytics engine, and surfaces anomalies to an LLM for automated tactical intelligence generation.
