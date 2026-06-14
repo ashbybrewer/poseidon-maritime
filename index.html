@@ -8,42 +8,53 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;background:#030810;color:#E8F4FF;font-family:Inter,system-ui,sans-serif;overflow:hidden}
-::-webkit-scrollbar{width:3px;height:3px}::-webkit-scrollbar-track{background:#030810}::-webkit-scrollbar-thumb{background:#1A3048;border-radius:2px}
+::-webkit-scrollbar{width:3px}::-webkit-scrollbar-track{background:#030810}::-webkit-scrollbar-thumb{background:#1A3048;border-radius:2px}
 #app{display:flex;flex-direction:column;height:100vh}
+/* HEADER */
 #hdr{background:#060D18;border-bottom:1px solid #162A40;padding:0 14px;display:flex;align-items:center;gap:12px;height:46px;flex-shrink:0}
 #logo{width:24px;height:24px;background:linear-gradient(135deg,#F0A500,#7A5300);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
 .lname{color:#F0A500;font-size:12px;font-weight:800;letter-spacing:.08em;font-family:'JetBrains Mono',monospace;line-height:1}
 .lsub{color:#3A5E7A;font-size:7px;letter-spacing:.14em;font-family:'JetBrains Mono',monospace}
-.div{height:26px;width:1px;background:#162A40;flex-shrink:0}
+.sep{height:26px;width:1px;background:#162A40;flex-shrink:0}
 #tabs{display:flex;gap:2px}
 .tab{background:transparent;color:#3A5E7A;border:1px solid transparent;border-radius:4px;padding:4px 10px;cursor:pointer;font-size:10px;font-family:'JetBrains Mono',monospace;letter-spacing:.06em}
 .tab.on{background:rgba(240,165,0,.1);color:#F0A500;border-color:#7A5300}
-#live{margin-left:auto;display:flex;align-items:center;gap:7px}
+#livestat{margin-left:auto;display:flex;align-items:center;gap:7px}
 .dot{width:5px;height:5px;border-radius:50%;background:#16A34A;animation:blink 2s infinite}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
-#clk{color:#3A5E7A;font-size:9px;font-family:'JetBrains Mono',monospace}
-#kpi{background:#060D18;border-bottom:1px solid #162A40;padding:5px 14px;display:flex;gap:16px;overflow-x:auto;flex-shrink:0}
+/* KPI */
+#kpi{background:#060D18;border-bottom:1px solid #162A40;padding:5px 14px;display:flex;gap:16px;overflow-x:auto;flex-shrink:0;scrollbar-width:none}
+#kpi::-webkit-scrollbar{display:none}
 .kv{flex-shrink:0}.kl{font-size:7px;font-family:'JetBrains Mono',monospace;letter-spacing:.1em;color:#3A5E7A}
 .kn{font-size:15px;font-family:'JetBrains Mono',monospace;font-weight:700;line-height:1.2}
+/* BODY */
 #body{flex:1;display:flex;gap:10px;padding:10px 12px;overflow:hidden;min-height:0}
-.pnl{display:none;flex:1;overflow:hidden}.pnl.on{display:flex}
+.pnl{display:none;flex:1;overflow:hidden;gap:10px}.pnl.on{display:flex}
 /* MAP */
 #mp{flex:1;display:flex;flex-direction:column;gap:7px;min-width:0;overflow:hidden}
-#cv-wrap{position:relative;border-radius:8px;overflow:hidden;border:1px solid #162A40;flex:1;min-height:0}
-#cv{display:block;width:100%;height:100%;cursor:crosshair}
-#leg{position:absolute;top:7px;left:7px;display:flex;gap:4px;flex-wrap:wrap}
+#cvwrap{position:relative;flex:1;border-radius:8px;overflow:hidden;border:1px solid #162A40;background:#020709;min-height:0}
+#cv{display:block;width:100%;height:100%;cursor:grab}
+#cv.grabbing{cursor:grabbing}
+/* Map controls */
+#mctrl{position:absolute;bottom:10px;left:10px;display:flex;flex-direction:column;gap:4px}
+.mzbtn{width:26px;height:26px;background:rgba(6,13,24,.9);border:1px solid #162A40;border-radius:4px;color:#7BA8CC;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;font-family:monospace}
+.mzbtn:hover{border-color:#F0A500;color:#F0A500}
+#mzlvl{color:#3A5E7A;font-size:8px;font-family:'JetBrains Mono',monospace;text-align:center;padding:2px 0}
+#leg{position:absolute;top:8px;left:8px;display:flex;gap:4px;flex-wrap:wrap}
 .li{display:flex;align-items:center;gap:3px;background:rgba(3,8,16,.85);padding:2px 6px;border-radius:3px;border:1px solid #162A40}
 .ld{width:6px;height:6px;border-radius:50%}.ll{font-size:9px;color:#7BA8CC;font-family:'JetBrains Mono',monospace}
-#mcnt{position:absolute;bottom:5px;right:7px;color:#3A5E7A;font-size:8px;font-family:'JetBrains Mono',monospace}
-#brch{background:rgba(107,28,28,.25);border:1px solid rgba(229,62,62,.35);border-radius:5px;padding:6px 9px;display:none;flex-shrink:0}
-#brch-t{color:#E53E3E;font-size:9px;font-family:'JetBrains Mono',monospace;margin-bottom:4px;letter-spacing:.08em}
-#brch-l{display:flex;gap:5px;flex-wrap:wrap}
+#mcnt{position:absolute;bottom:8px;right:8px;color:#3A5E7A;font-size:8px;font-family:'JetBrains Mono',monospace}
+#tooltip{position:absolute;background:rgba(6,13,24,.95);border:1px solid #162A40;border-radius:5px;padding:6px 9px;pointer-events:none;display:none;font-family:'JetBrains Mono',monospace;font-size:10px;color:#E8F4FF;z-index:10;max-width:200px}
+#brchbar{background:rgba(107,28,28,.25);border:1px solid rgba(229,62,62,.35);border-radius:5px;padding:5px 9px;display:none;flex-shrink:0}
+#brtitle{color:#E53E3E;font-size:9px;font-family:'JetBrains Mono',monospace;margin-bottom:4px;letter-spacing:.08em}
+#brlist{display:flex;gap:4px;flex-wrap:wrap}
 .btag{background:#0A1520;border:1px solid #162A40;border-radius:3px;padding:2px 6px;cursor:pointer;font-size:9px;font-family:'JetBrains Mono',monospace}
 /* DETAIL */
-#dtl{width:295px;background:#060D18;border:1px solid #162A40;border-radius:7px;padding:11px;display:flex;flex-direction:column;flex-shrink:0}
-#dt-hdr{color:#7BA8CC;font-size:9px;font-family:'JetBrains Mono',monospace;letter-spacing:.1em;margin-bottom:7px;border-bottom:1px solid #162A40;padding-bottom:6px;flex-shrink:0}
-#dt-body{flex:1;overflow-y:auto}
-#dt-empty{color:#3A5E7A;text-align:center;padding:40px 12px;font-family:'JetBrains Mono',monospace;font-size:10px;line-height:1.8}
+#dtl{width:290px;background:#060D18;border:1px solid #162A40;border-radius:7px;padding:11px;display:flex;flex-direction:column;flex-shrink:0;overflow:hidden}
+#dthdr{color:#7BA8CC;font-size:9px;font-family:'JetBrains Mono',monospace;letter-spacing:.1em;margin-bottom:7px;border-bottom:1px solid #162A40;padding-bottom:6px;flex-shrink:0}
+#dtbody{flex:1;overflow-y:auto}
+#dtempty{color:#3A5E7A;text-align:center;padding:40px 12px;font-family:'JetBrains Mono',monospace;font-size:10px;line-height:2}
+#dtcon{display:none}
 .vhdr{border-bottom:1px solid #162A40;padding-bottom:9px;margin-bottom:9px;display:flex;justify-content:space-between;align-items:flex-start}
 .vn{color:#E8F4FF;font-size:13px;font-weight:700}.vm{color:#3A5E7A;font-size:9px;font-family:'JetBrains Mono',monospace}
 .vbdg{font-size:9px;padding:2px 6px;border-radius:3px;font-family:'JetBrains Mono',monospace;border:1px solid;flex-shrink:0}
@@ -54,76 +65,60 @@ html,body{height:100%;background:#030810;color:#E8F4FF;font-family:Inter,system-
 .ast{color:#7BA8CC;font-size:9px;font-family:'JetBrains Mono',monospace;margin-bottom:4px;letter-spacing:.08em}
 .ar{display:flex;gap:7px;padding:4px 7px;background:#0A1520;border-radius:4px;margin-bottom:3px;border-left:2px solid}
 .at{font-size:9px;font-family:'JetBrains Mono',monospace}.atm{color:#3A5E7A;font-size:8px}.asv{font-size:8px;font-family:'JetBrains Mono',monospace}
-#aibtn{width:100%;border:none;border-radius:5px;padding:8px;cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:.05em;margin-top:9px}
-#air{background:#0A1520;border-radius:7px;padding:11px;margin-top:9px;display:none}
+#aibtn{width:100%;border:none;border-radius:5px;padding:8px;cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:.05em;margin-top:9px;transition:all .2s}
+#airesult{background:#0A1520;border-radius:7px;padding:11px;margin-top:9px;display:none}
 .aih{display:flex;justify-content:space-between;align-items:center;margin-bottom:7px}
-.aihl{color:#E8F4FF;font-size:12px;font-weight:700}
 .aibdg{padding:2px 6px;border-radius:3px;font-size:10px;font-family:'JetBrains Mono',monospace;font-weight:700}
 .rbb{width:100%;height:5px;background:#0F1E2E;border-radius:3px;overflow:hidden}
 .rbf{height:100%;background:linear-gradient(90deg,#16A34A,#F0A500,#E53E3E);border-radius:3px}
 .aia{color:#7BA8CC;font-size:10px;line-height:1.6;margin:7px 0 9px}
-.ais{font-size:8px;font-family:'JetBrains Mono',monospace;letter-spacing:.08em;margin-bottom:3px}
-.aii{font-size:9px;padding:2px 0 2px 7px;margin-bottom:2px;border-left:2px solid;color:#7BA8CC}
-.aie{color:#3A5E7A;font-size:9px;margin-top:5px;border-top:1px solid #162A40;padding-top:5px}
+.aisec{font-size:8px;font-family:'JetBrains Mono',monospace;letter-spacing:.08em;margin-bottom:3px}
+.aiitem{font-size:9px;padding:2px 0 2px 7px;margin-bottom:2px;border-left:2px solid;color:#7BA8CC}
+.aienv{color:#3A5E7A;font-size:9px;margin-top:5px;border-top:1px solid #162A40;padding-top:5px}
 .aitags{display:flex;gap:3px;flex-wrap:wrap;margin-top:4px}
 .aitag{background:#0F1E2E;color:#8B5CF6;font-size:8px;padding:2px 5px;border-radius:3px;font-family:'JetBrains Mono',monospace}
 /* FLEET */
-#fp{display:flex;gap:10px;overflow:hidden;flex:1}
-#ff{width:190px;display:flex;flex-direction:column;gap:6px;flex-shrink:0}
+#flp{display:flex;gap:10px;overflow:hidden;flex:1}
+#ffl{width:185px;display:flex;flex-direction:column;gap:6px;flex-shrink:0}
 #fsrch{background:#0A1520;border:1px solid #162A40;border-radius:4px;padding:5px 8px;color:#E8F4FF;font-family:'JetBrains Mono',monospace;font-size:10px;outline:none;width:100%}
 .fbs{display:flex;gap:3px;flex-wrap:wrap}
 .fb{background:#0A1520;color:#3A5E7A;border:1px solid #162A40;border-radius:3px;padding:2px 5px;cursor:pointer;font-size:8px;font-family:'JetBrains Mono',monospace}
 .fb.on{background:rgba(240,165,0,.1);color:#F0A500;border-color:#7A5300}
-#fcnt{color:#3A5E7A;font-size:9px;font-family:'JetBrains Mono',monospace}
 #ftw{flex:1;background:#060D18;border:1px solid #162A40;border-radius:7px;padding:9px;overflow:auto}
 #ft{width:100%;border-collapse:collapse;font-size:10px;font-family:'JetBrains Mono',monospace}
 #ft th{color:#3A5E7A;font-weight:400;text-align:left;padding:4px 6px;font-size:8px;letter-spacing:.08em;border-bottom:1px solid #162A40}
-#ft td{padding:4px 6px;border-bottom:1px solid rgba(22,42,64,.2)}
-#ft tr{cursor:pointer}#ft tr:hover td{background:#0A1520}
+#ft td{padding:4px 6px;border-bottom:1px solid rgba(22,42,64,.15)}
+#ft tr:hover td{background:#0A1520;cursor:pointer}
 /* EVENTS */
-#ep{display:flex;gap:10px;overflow:hidden;flex:1}
-#ef{flex:1;background:#060D18;border:1px solid #162A40;border-radius:7px;padding:11px;display:flex;flex-direction:column;gap:6px}
-#eft{color:#7BA8CC;font-size:9px;font-family:'JetBrains Mono',monospace;letter-spacing:.1em;flex-shrink:0}
-#el{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:3px}
+#evp{display:flex;gap:10px;overflow:hidden;flex:1}
+#evf{flex:1;background:#060D18;border:1px solid #162A40;border-radius:7px;padding:11px;display:flex;flex-direction:column;gap:6px}
+#evlist{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:3px}
 .ec{background:#030810;border:1px solid #162A40;border-radius:4px;padding:5px 8px;border-left:3px solid}
 .etp{display:flex;justify-content:space-between;margin-bottom:2px}
-.ety{font-size:9px;font-family:'JetBrains Mono',monospace;font-weight:700}
-.etm{color:#3A5E7A;font-size:8px;font-family:'JetBrains Mono',monospace}
-.evn{color:#E8F4FF;font-size:10px}.evm{color:#3A5E7A;font-size:8px;font-family:'JetBrains Mono',monospace}
-#es{width:190px;display:flex;flex-direction:column;gap:6px;flex-shrink:0}
+#evstats{width:185px;display:flex;flex-direction:column;gap:6px;flex-shrink:0}
 .sc{background:#060D18;border:1px solid #162A40;border-radius:5px;padding:8px 10px;border-top:2px solid}
 .sl{color:#7BA8CC;font-size:8px;font-family:'JetBrains Mono',monospace;letter-spacing:.08em;margin-bottom:2px}
 .sv{font-size:21px;font-family:'JetBrains Mono',monospace;font-weight:700}
 /* CARGO */
-#cp{display:flex;gap:10px;overflow:hidden;flex:1}
-.cpn{flex:1;background:#060D18;border:1px solid #162A40;border-radius:7px;padding:12px;overflow-y:auto}
+#cgp{display:flex;gap:10px;overflow:hidden;flex:1}
+.cpane{flex:1;background:#060D18;border:1px solid #162A40;border-radius:7px;padding:12px;overflow-y:auto}
 .pt{color:#7BA8CC;font-size:9px;font-family:'JetBrains Mono',monospace;letter-spacing:.1em;margin-bottom:11px}
 .br{margin-bottom:9px}.bls{display:flex;justify-content:space-between;margin-bottom:3px}
-.bn{color:#7BA8CC;font-size:11px}.bv{font-size:10px;font-family:'JetBrains Mono',monospace}
-.bb{height:6px;background:#0F1E2E;border-radius:3px;overflow:hidden}
-.bf{height:100%;border-radius:3px;transition:width .4s}
-.er{display:flex;align-items:center;gap:7px;padding:5px 0;border-bottom:1px solid rgba(22,42,64,.1);cursor:pointer}
-.en{color:#E8F4FF;font-size:10px;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.esb{color:#3A5E7A;font-size:8px;font-family:'JetBrains Mono',monospace}
-.ed{color:#F0A500;font-size:10px;font-family:'JetBrains Mono',monospace;text-align:right;flex-shrink:0}
-.eds{color:#3A5E7A;font-size:8px;font-family:'JetBrains Mono',monospace}
+.bname{color:#7BA8CC;font-size:11px}.bval{font-size:10px;font-family:'JetBrains Mono',monospace}
+.bbg{height:6px;background:#0F1E2E;border-radius:3px;overflow:hidden}
+.bfill{height:100%;border-radius:3px}
+.erow{display:flex;align-items:center;gap:7px;padding:5px 0;border-bottom:1px solid rgba(22,42,64,.1);cursor:pointer}
 /* INTEL */
-#ip{display:flex;gap:10px;overflow:hidden;flex:1}
-#il{flex:1;display:flex;flex-direction:column;gap:9px;overflow-y:auto}
-.ic{background:#060D18;border:1px solid #162A40;border-radius:7px;padding:11px}
-.ict{font-size:9px;font-family:'JetBrains Mono',monospace;letter-spacing:.08em;margin-bottom:7px}
-.dr{border-radius:4px;padding:6px 8px;cursor:pointer;margin-bottom:4px;display:flex;justify-content:space-between;align-items:center}
-.drn{color:#E8F4FF;font-size:11px}.drs{color:#3A5E7A;font-size:9px;font-family:'JetBrains Mono',monospace}
-#ir{width:250px;background:#060D18;border:1px solid #162A40;border-radius:7px;padding:11px;overflow-y:auto;flex-shrink:0}
+#itp{display:flex;gap:10px;overflow:hidden;flex:1}
+#itl{flex:1;display:flex;flex-direction:column;gap:9px;overflow-y:auto}
+.itcard{background:#060D18;border:1px solid #162A40;border-radius:7px;padding:11px}
+.itr{border-radius:4px;padding:6px 8px;cursor:pointer;margin-bottom:4px;display:flex;justify-content:space-between;align-items:center}
+#itr{width:245px;background:#060D18;border:1px solid #162A40;border-radius:7px;padding:11px;overflow-y:auto;flex-shrink:0}
 .ig{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:11px}
 .igc{background:#0A1520;border-radius:5px;padding:8px;text-align:center}
 .igv{font-size:19px;font-family:'JetBrains Mono',monospace;font-weight:700}
 .igl{color:#3A5E7A;font-size:8px;font-family:'JetBrains Mono',monospace;margin-top:1px}
-.zr{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid rgba(22,42,64,.2)}
-.zn{color:#E8F4FF;font-size:10px}.zrk{font-size:8px;font-family:'JetBrains Mono',monospace}.zcnt{font-size:15px;font-family:'JetBrains Mono',monospace;font-weight:700}
-.itip{margin-top:11px;background:#0A1520;border-radius:5px;padding:8px;border-left:3px solid #F0A500}
-.itl{color:#F0A500;font-size:8px;font-family:'JetBrains Mono',monospace;margin-bottom:3px}
-.itb{color:#7BA8CC;font-size:9px;line-height:1.6}
+.zrow{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid rgba(22,42,64,.2)}
 </style>
 </head>
 <body>
@@ -131,7 +126,7 @@ html,body{height:100%;background:#030810;color:#E8F4FF;font-family:Inter,system-
   <div id="hdr">
     <div id="logo">⚓</div>
     <div><div class="lname">POSEIDON</div><div class="lsub">MARITIME INTELLIGENCE PLATFORM</div></div>
-    <div class="div"></div>
+    <div class="sep"></div>
     <div id="tabs">
       <button class="tab on" onclick="goTab('map',this)">MAP</button>
       <button class="tab" onclick="goTab('fleet',this)">FLEET</button>
@@ -139,41 +134,62 @@ html,body{height:100%;background:#030810;color:#E8F4FF;font-family:Inter,system-
       <button class="tab" onclick="goTab('cargo',this)">CARGO</button>
       <button class="tab" onclick="goTab('intel',this)">INTEL</button>
     </div>
-    <div id="live"><div class="dot"></div><span style="color:#16A34A;font-size:9px;font-family:'JetBrains Mono',monospace">AIS LIVE</span><span id="clk"></span></div>
+    <div id="livestat">
+      <div class="dot"></div>
+      <span style="color:#16A34A;font-size:9px;font-family:'JetBrains Mono',monospace">AIS LIVE</span>
+      <span id="clk" style="color:#3A5E7A;font-size:9px;font-family:'JetBrains Mono',monospace"></span>
+    </div>
   </div>
   <div id="kpi">
-    <div class="kv"><div class="kl">VESSELS</div><div class="kn" id="kv" style="color:#0EA5E9">0</div></div>
-    <div class="kv"><div class="kl">DARK</div><div class="kn" id="kd">0</div></div>
-    <div class="kv"><div class="kl">STS OPS</div><div class="kn" id="ks">0</div></div>
-    <div class="kv"><div class="kl">ANOMALOUS</div><div class="kn" id="ka">0</div></div>
-    <div class="kv"><div class="kl">AVG SPD</div><div class="kn" id="ksp" style="color:#7BA8CC">0kt</div></div>
-    <div class="kv"><div class="kl">FLAGS</div><div class="kn" id="kf" style="color:#8B5CF6">0</div></div>
-    <div class="kv"><div class="kl">FLEET DWT</div><div class="kn" id="kw" style="color:#7BA8CC">0</div></div>
-    <div class="kv"><div class="kl">ZONE ALERTS</div><div class="kn" id="kz">0</div></div>
-    <div class="kv"><div class="kl">EVENTS</div><div class="kn" id="ke">0</div></div>
+    <div class="kv"><div class="kl">VESSELS</div><div class="kn" id="kves" style="color:#0EA5E9">0</div></div>
+    <div class="kv"><div class="kl">DARK</div><div class="kn" id="kdrk">0</div></div>
+    <div class="kv"><div class="kl">STS OPS</div><div class="kn" id="ksts">0</div></div>
+    <div class="kv"><div class="kl">ANOMALOUS</div><div class="kn" id="kanm">0</div></div>
+    <div class="kv"><div class="kl">AVG SPEED</div><div class="kn" id="kspd" style="color:#7BA8CC">0kt</div></div>
+    <div class="kv"><div class="kl">FLAGS</div><div class="kn" id="kflg" style="color:#8B5CF6">0</div></div>
+    <div class="kv"><div class="kl">FLEET DWT</div><div class="kn" id="kdwt" style="color:#7BA8CC">0</div></div>
+    <div class="kv"><div class="kl">ZONE ALERTS</div><div class="kn" id="kzne">0</div></div>
+    <div class="kv"><div class="kl">EVENTS</div><div class="kn" id="kevt">0</div></div>
+    <div class="kv"><div class="kl">ZOOM</div><div class="kn" id="kzoom" style="color:#3A5E7A">1.0×</div></div>
   </div>
   <div id="body">
-    <div id="pnl-map" class="pnl on" style="flex-direction:row;gap:10px">
+    <!-- MAP -->
+    <div id="pnl-map" class="pnl on" style="flex-direction:row">
       <div id="mp">
-        <div id="cv-wrap"><canvas id="cv"></canvas>
+        <div id="cvwrap">
+          <canvas id="cv"></canvas>
           <div id="leg">
             <div class="li"><div class="ld" style="background:#16A34A"></div><span class="ll">Underway</span></div>
             <div class="li"><div class="ld" style="background:#E53E3E"></div><span class="ll">Dark</span></div>
             <div class="li"><div class="ld" style="background:#F0A500"></div><span class="ll">STS</span></div>
             <div class="li"><div class="ld" style="background:#0EA5E9"></div><span class="ll">Anchored</span></div>
           </div>
+          <div id="mctrl">
+            <button class="mzbtn" onclick="zoom(1.4)" title="Zoom in">+</button>
+            <div id="mzlvl">1.0×</div>
+            <button class="mzbtn" onclick="zoom(1/1.4)" title="Zoom out">−</button>
+            <button class="mzbtn" onclick="resetView()" title="Reset" style="font-size:11px">⌂</button>
+          </div>
           <div id="mcnt"></div>
+          <div id="tooltip"></div>
         </div>
-        <div id="brch"><div id="brch-t">⚠ GEOFENCE BREACH ALERTS</div><div id="brch-l"></div></div>
+        <div id="brchbar">
+          <div id="brtitle">⚠ GEOFENCE BREACH ALERTS</div>
+          <div id="brlist"></div>
+        </div>
       </div>
       <div id="dtl">
-        <div id="dt-hdr">VESSEL DETAIL</div>
-        <div id="dt-body"><div id="dt-empty">CLICK ANY VESSEL<br/>ON THE MAP</div><div id="dt-con" style="display:none"></div></div>
+        <div id="dthdr">VESSEL DETAIL</div>
+        <div id="dtbody">
+          <div id="dtempty">CLICK ANY VESSEL<br/>ON THE MAP<br/><br/><span style="color:#162A40">Scroll to zoom · Drag to pan</span></div>
+          <div id="dtcon"></div>
+        </div>
       </div>
     </div>
+    <!-- FLEET -->
     <div id="pnl-fleet" class="pnl">
-      <div id="fp">
-        <div id="ff">
+      <div id="flp">
+        <div id="ffl">
           <input id="fsrch" type="text" placeholder="Search vessel / MMSI..." oninput="renderFleet()"/>
           <div class="fbs">
             <button class="fb on" onclick="setFilt('ALL',this)">ALL</button>
@@ -182,29 +198,44 @@ html,body{height:100%;background:#030810;color:#E8F4FF;font-family:Inter,system-
             <button class="fb" onclick="setFilt('STS_OPERATION',this)">STS</button>
             <button class="fb" onclick="setFilt('ANOMALY',this)">ANOMALY</button>
           </div>
-          <div id="fcnt"></div>
+          <div id="fcnt" style="color:#3A5E7A;font-size:9px;font-family:'JetBrains Mono',monospace"></div>
         </div>
         <div id="ftw"><table id="ft"><thead><tr><th>VESSEL</th><th>MMSI</th><th>FLAG</th><th>CARGO</th><th>SPEED</th><th>STATUS</th><th>⚠</th></tr></thead><tbody id="ftb"></tbody></table></div>
       </div>
     </div>
+    <!-- EVENTS -->
     <div id="pnl-events" class="pnl">
-      <div id="ep"><div id="ef"><div id="eft">LIVE ANOMALY FEED</div><div id="el"></div></div><div id="es"></div></div>
-    </div>
-    <div id="pnl-cargo" class="pnl">
-      <div id="cp"><div class="cpn"><div class="pt">CARGO DISTRIBUTION</div><div id="cbars"></div></div><div class="cpn"><div class="pt">ETA FORECAST</div><div id="etal"></div></div></div>
-    </div>
-    <div id="pnl-intel" class="pnl">
-      <div id="ip">
-        <div id="il">
-          <div class="ic"><div class="ict" style="color:#E53E3E">AIS DARK VESSELS</div><div id="dkl"></div></div>
-          <div class="ic"><div class="ict" style="color:#F0A500">STS OPERATIONS</div><div id="stsl"></div></div>
+      <div id="evp">
+        <div id="evf">
+          <div style="color:#7BA8CC;font-size:9px;font-family:'JetBrains Mono',monospace;letter-spacing:.1em;flex-shrink:0">LIVE ANOMALY FEED</div>
+          <div id="evlist"></div>
         </div>
-        <div id="ir">
+        <div id="evstats"></div>
+      </div>
+    </div>
+    <!-- CARGO -->
+    <div id="pnl-cargo" class="pnl">
+      <div id="cgp">
+        <div class="cpane"><div class="pt">CARGO DISTRIBUTION</div><div id="cbars"></div></div>
+        <div class="cpane"><div class="pt">ETA FORECAST — ALL VESSELS</div><div id="etal"></div></div>
+      </div>
+    </div>
+    <!-- INTEL -->
+    <div id="pnl-intel" class="pnl">
+      <div id="itp">
+        <div id="itl">
+          <div class="itcard"><div style="color:#E53E3E;font-size:9px;font-family:'JetBrains Mono',monospace;letter-spacing:.08em;margin-bottom:7px">AIS DARK VESSELS</div><div id="dklist"></div></div>
+          <div class="itcard"><div style="color:#F0A500;font-size:9px;font-family:'JetBrains Mono',monospace;letter-spacing:.08em;margin-bottom:7px">STS OPERATIONS</div><div id="stslist"></div></div>
+        </div>
+        <div id="itr">
           <div class="pt">INTEL SUMMARY</div>
           <div class="ig" id="igrd"></div>
           <div style="color:#3A5E7A;font-size:8px;font-family:'JetBrains Mono',monospace;margin-bottom:5px;letter-spacing:.08em">HIGH-RISK ZONES</div>
-          <div id="iznl"></div>
-          <div class="itip"><div class="itl">AI ANALYSIS</div><div class="itb">Select a vessel with ⚠ on MAP tab → click AI Threat Assessment for LLM intel report.</div></div>
+          <div id="izone"></div>
+          <div style="margin-top:11px;background:#0A1520;border-radius:5px;padding:8px;border-left:3px solid #F0A500">
+            <div style="color:#F0A500;font-size:8px;font-family:'JetBrains Mono',monospace;margin-bottom:3px">AI ANALYSIS</div>
+            <div style="color:#7BA8CC;font-size:9px;line-height:1.6">Select a vessel with ⚠ on MAP tab → click AI Threat Assessment.</div>
+          </div>
         </div>
       </div>
     </div>
@@ -212,7 +243,7 @@ html,body{height:100%;background:#030810;color:#E8F4FF;font-family:Inter,system-
 </div>
 <script>
 const LAND=[[[670.0,204.8],[675.0,205.3],[679.3,203.6],[682.2,201.8],[686.3,201.8],[691.3,201.8],[694.8,201.3],[698.2,200.1],[699.6,202.9],[703.5,201.5],[708.3,201.6],[702.6,202.9],[698.0,204.1],[697.5,206.4],[694.3,207.7],[692.4,210.3],[688.3,211.9],[684.4,213.3],[680.7,215.4],[676.5,215.4],[669.1,214.8],[671.6,213.3],[669.1,210.9],[669.3,208.5],[670.0,204.8]],[[545.4,268.5],[546.8,270.5],[550.4,271.6],[553.9,270.4],[557.2,270.0],[560.4,271.5],[560.8,273.8],[561.5,276.1],[565.2,275.8],[566.9,277.7],[560.9,278.8],[560.8,283.5],[564.5,285.7],[559.4,286.3],[552.7,286.1],[539.5,285.5],[535.6,284.8],[532.3,284.4],[533.7,281.7],[534.7,279.8],[537.0,278.2],[538.2,276.4],[536.4,274.2],[536.8,272.4],[535.4,270.0],[537.2,268.5],[545.4,268.5]],[[534.5,268.2],[535.1,266.4],[534.5,268.2]],[[557.2,193.3],[558.3,195.8],[556.0,197.6],[553.7,195.5],[553.6,192.7],[557.0,192.6],[557.2,193.3]],[[643.3,223.9],[648.3,224.0],[651.9,223.0],[655.8,221.0],[655.0,223.8],[653.4,225.7],[644.4,225.8],[643.3,223.9]],[[318.1,356.0],[314.0,355.3],[309.4,355.2],[309.3,349.7],[311.8,352.7],[315.4,354.1],[319.3,354.8],[318.1,356.0]],[[319.5,292.7],[325.4,292.6],[331.0,295.5],[336.6,297.0],[339.9,298.3],[337.2,300.7],[343.1,301.4],[347.8,299.9],[349.6,298.2],[351.0,300.4],[346.8,302.0],[343.6,303.6],[339.9,305.8],[338.5,308.9],[337.9,311.0],[341.0,314.5],[342.4,316.5],[339.6,319.8],[335.5,320.7],[329.9,321.1],[326.9,323.5],[322.9,325.4],[319.1,325.2],[321.4,327.7],[318.9,329.9],[317.9,333.0],[313.1,334.1],[315.0,337.2],[316.7,339.5],[313.4,340.8],[311.6,343.4],[307.9,345.3],[310.7,349.1],[306.9,348.6],[300.2,348.3],[299.1,345.2],[296.1,342.1],[299.1,339.8],[300.2,336.9],[301.2,334.1],[300.6,331.3],[299.6,327.5],[300.2,324.7],[301.6,321.1],[302.4,318.6],[304.5,315.8],[306.1,312.6],[304.1,307.8],[305.5,304.4],[308.3,301.4],[310.0,299.2],[310.0,296.5],[313.9,294.1],[315.9,292.3],[319.5,292.7]],[[621.1,194.8],[624.9,194.5],[627.5,196.4],[629.2,199.2],[625.8,197.9],[621.3,196.4],[621.1,194.8]],[[334.5,462.0],[327.1,469.1],[320.9,469.7],[317.4,466.7],[322.1,464.1],[328.1,465.0],[331.6,458.6],[334.5,462.0]],[[57.8,457.5],[52.4,458.6],[48.8,455.9],[45.2,450.7],[52.1,449.1],[57.0,454.0],[57.8,457.5]],[[374.6,446.8],[378.0,449.8],[379.6,461.8],[375.3,464.5],[370.8,466.7],[365.6,468.8],[359.8,470.6],[353.2,470.1],[349.5,467.1],[356.0,461.2],[360.1,455.1],[363.0,449.7],[366.2,446.8],[370.4,445.3],[374.6,446.8]],[[163.3,419.8],[166.9,420.6],[170.2,419.7],[166.0,422.9],[162.2,422.5],[163.3,419.8]],[[151.2,419.7],[155.5,421.7],[150.2,421.0],[146.4,419.6],[151.2,419.7]],[[225.1,412.2],[231.1,412.3],[227.2,414.8],[223.8,414.6],[220.0,414.9],[215.7,412.0],[221.0,411.8],[225.1,412.2]],[[309.9,407.8],[308.9,413.3],[302.6,414.9],[298.9,414.8],[293.9,414.2],[296.6,408.6],[300.6,406.6],[302.3,399.6],[306.3,400.5],[309.1,405.8],[309.9,407.8]],[[337.2,381.8],[331.6,382.3],[327.7,384.0],[326.1,387.7],[322.9,390.0],[319.8,392.3],[318.6,397.0],[322.3,399.2],[325.6,402.0],[328.3,406.7],[329.5,412.6],[331.4,418.1],[327.9,424.7],[324.2,425.5],[321.2,429.3],[317.1,431.4],[313.4,432.3],[309.9,433.6],[306.1,434.9],[299.4,437.7],[294.5,437.5],[290.1,437.9],[285.4,437.9],[290.6,441.6],[295.4,445.8],[287.5,447.3],[283.5,449.1],[286.5,457.7],[290.7,463.8],[296.5,465.2],[301.5,467.6],[305.5,470.4],[310.6,473.4],[317.5,474.9],[324.3,477.6],[329.0,480.6],[334.2,484.2],[338.3,493.9],[341.6,489.7],[346.2,486.3],[351.1,482.9],[356.8,480.2],[361.8,477.4],[368.7,477.2],[375.5,478.6],[381.1,481.0],[386.7,473.7],[393.8,473.6],[399.3,471.5],[404.5,469.5],[410.2,468.3],[416.4,466.7],[420.7,464.5],[417.5,458.6],[412.2,456.0],[406.4,457.2],[401.0,457.2],[401.9,447.3],[405.8,445.7],[410.5,444.1],[413.9,442.1],[417.3,440.2],[423.6,436.6],[427.3,435.8],[433.5,435.0],[437.6,434.2],[441.0,433.0],[444.4,431.7],[451.3,428.5],[456.4,425.1],[457.1,418.0],[463.0,415.9],[468.0,412.6],[471.4,409.1],[476.1,410.9],[479.5,409.4],[483.9,408.1],[487.9,410.0],[491.5,409.2],[495.0,408.7],[499.4,410.8],[505.2,408.5],[511.5,407.3],[517.4,405.6],[521.5,403.2],[526.5,403.7],[530.0,407.2],[534.5,404.7],[540.9,403.8],[544.3,403.8],[550.6,403.1],[556.6,403.7],[560.9,405.3],[565.7,405.9],[572.2,405.7],[578.0,405.0],[583.4,403.3],[588.9,402.2],[592.5,398.8],[597.0,398.1],[600.5,400.5],[605.3,401.6],[610.2,401.7],[613.7,399.2],[619.3,397.4],[624.7,395.8],[629.2,394.0],[634.3,393.1],[638.7,392.2],[643.9,389.0],[648.9,387.8],[653.9,387.7],[658.8,389.0],[661.5,391.8],[666.5,393.3],[670.6,395.4],[675.5,394.9],[680.5,394.1],[685.9,395.0],[691.4,395.3],[693.6,399.4],[690.5,403.3],[690.1,409.9],[694.1,413.8],[698.8,411.1],[703.0,406.7],[706.9,402.7],[712.9,402.0],[717.0,399.8],[719.8,396.8],[724.8,395.1],[727.9,393.1],[732.7,392.9],[737.9,392.1],[743.0,391.3],[746.7,391.6],[751.8,392.6],[757.2,392.5],[761.6,392.2],[766.1,393.2],[771.6,392.7],[777.0,392.7],[780.3,390.3],[785.6,386.6],[789.6,388.1],[794.9,391.5],[800.2,391.6],[806.2,390.7],[810.4,388.6],[815.6,387.7],[819.2,389.5],[824.2,390.5],[829.4,392.4],[832.9,392.8],[837.9,391.3],[842.3,389.9],[847.7,390.8],[852.8,390.2],[857.8,390.9],[863.3,389.7],[869.3,389.5],[874.3,388.9],[878.4,389.8],[881.8,391.6],[888.6,391.3],[894.8,391.1],[901.0,391.2],[906.1,392.6],[910.3,396.1],[917.0,397.7],[920.8,398.4],[926.8,399.1],[931.0,398.8],[935.6,401.1],[939.0,401.5],[943.5,403.6],[948.8,406.1],[955.1,406.7],[961.4,406.9],[967.8,407.8],[973.6,409.8],[972.5,416.8],[966.6,421.4],[961.4,424.4],[958.2,428.6],[955.1,432.8],[954.1,440.2],[957.6,447.7],[962.8,448.7],[958.9,453.0],[954.6,454.6],[949.4,454.9],[946.5,463.3],[943.9,469.9],[947.6,473.0],[951.4,480.8],[954.7,484.4],[958.6,487.9],[962.8,491.5],[969.2,495.3],[978.6,504.6],[988.8,506.3],[995.2,510.8],[1000.0,514.5],[0.2,514.7],[7.6,510.5],[10.9,505.4],[15.6,511.8],[19.1,505.7],[27.9,502.5],[31.9,507.4],[36.0,512.3],[43.9,516.3],[50.2,519.1],[60.9,519.1],[68.9,519.1],[80.7,519.1],[87.4,519.1],[94.8,519.1],[102.5,519.1],[92.1,511.7],[83.2,508.2],[73.4,499.8],[75.9,485.0],[70.8,477.8],[64.3,471.3],[71.1,471.9],[77.5,470.4],[81.5,473.6],[86.5,470.8],[91.1,467.4],[88.7,458.8],[84.6,456.4],[78.9,456.0],[73.9,454.9],[68.5,454.2],[63.1,449.1],[60.1,439.1],[64.0,441.7],[68.5,441.1],[72.9,440.2],[79.6,442.4],[83.3,441.0],[86.8,439.2],[94.2,436.5],[97.5,429.0],[103.3,429.7],[110.5,428.2],[114.3,427.6],[118.0,426.3],[124.4,424.0],[128.5,424.7],[132.6,424.0],[136.3,424.9],[140.1,424.8],[143.8,424.1],[147.5,424.6],[151.7,425.2],[155.5,424.9],[159.5,425.1],[163.7,425.2],[167.5,424.9],[173.7,422.5],[177.2,423.7],[180.5,422.8],[185.3,422.5],[188.1,426.2],[194.3,426.7],[198.0,427.3],[205.1,428.5],[208.7,427.5],[212.9,427.7],[216.6,428.5],[220.4,429.5],[218.7,423.4],[215.2,423.0],[212.0,415.4],[217.8,416.4],[221.4,416.1],[227.4,418.3],[232.4,420.4],[236.0,419.7],[239.8,418.7],[243.2,418.1],[249.8,418.9],[254.4,417.4],[261.1,417.7],[267.0,419.9],[270.4,420.5],[273.7,421.6],[277.0,417.9],[283.5,419.4],[288.3,422.2],[292.0,421.7],[297.7,419.3],[301.1,418.6],[305.0,418.0],[308.5,417.4],[312.9,414.8],[312.3,409.0],[309.8,404.1],[311.2,399.3],[312.2,394.5],[314.7,390.3],[318.4,387.8],[321.7,385.3],[325.0,383.5],[329.4,382.2],[333.6,381.2],[337.2,379.3],[341.0,379.8],[337.2,381.8]],[[691.5,340.6],[695.9,341.6],[691.0,343.1],[691.5,340.6]],[[903.9,324.6],[908.1,325.0],[911.9,324.8],[911.2,327.8],[908.0,330.2],[904.0,328.3],[902.0,325.3],[903.9,324.6]],[[898.8,280.1],[902.5,281.3],[904.1,283.8],[906.0,286.1],[906.6,287.9],[909.6,288.7],[913.5,290.1],[915.8,293.1],[919.2,294.9],[922.4,296.5],[925.4,299.0],[926.6,302.3],[925.9,304.6],[925.2,307.0],[923.5,309.8],[920.4,312.0],[918.7,314.3],[916.9,316.6],[915.1,319.0],[909.4,319.8],[906.4,321.3],[902.4,320.2],[898.9,320.9],[894.9,320.1],[890.7,319.5],[888.4,317.0],[883.7,315.1],[883.9,312.9],[880.1,314.5],[882.0,312.5],[882.8,310.4],[878.8,312.4],[875.6,313.1],[873.9,310.9],[869.4,308.9],[864.8,308.0],[859.8,308.1],[856.2,308.7],[850.4,309.2],[845.1,310.5],[841.1,312.1],[836.9,312.0],[833.0,312.2],[829.2,313.6],[825.8,314.1],[821.0,313.0],[821.3,310.4],[821.4,308.2],[819.4,305.5],[818.4,303.5],[816.8,301.1],[814.8,299.1],[815.6,296.8],[816.2,294.2],[817.1,292.2],[820.7,291.8],[824.2,290.6],[828.4,290.1],[832.8,289.5],[837.2,288.3],[839.6,286.7],[841.7,284.0],[845.2,283.9],[847.0,282.0],[850.3,280.9],[855.0,280.8],[858.3,281.7],[860.8,279.9],[862.8,278.3],[868.3,277.6],[873.3,277.5],[877.5,277.4],[879.7,278.8],[877.2,280.8],[878.6,282.7],[882.2,283.7],[886.4,285.0],[889.5,286.0],[891.9,284.7],[893.6,282.0],[893.1,280.0],[893.6,278.1],[894.8,276.1],[897.5,277.3],[898.9,279.5],[898.8,280.1]],[[547.2,180.5],[545.0,183.2],[540.6,184.1],[534.4,183.4],[531.0,183.0],[527.6,183.1],[531.7,181.8],[535.1,181.5],[537.8,178.8],[541.4,178.7],[545.8,179.1],[547.2,180.5]],[[625.0,197.4],[628.2,199.2],[624.9,198.1],[625.0,197.4]],[[631.6,194.5],[635.0,193.4],[637.8,195.8],[636.7,198.6],[633.4,199.1],[629.2,199.2],[626.7,197.0],[624.9,194.5],[629.2,194.8],[631.6,194.5]],[[581.5,266.5],[581.3,264.8],[584.6,263.5],[583.7,265.9],[581.5,266.5]],[[509.2,173.3],[513.8,173.0],[517.1,174.5],[515.8,177.4],[511.9,176.6],[508.7,174.6],[509.2,173.3]],[[507.5,250.9],[504.5,250.1],[504.6,246.8],[503.0,245.2],[504.0,243.2],[506.9,242.2],[510.0,243.0],[510.0,245.0],[508.1,246.7],[507.6,248.6],[507.5,250.9]],[[492.1,246.0],[488.0,246.1],[485.0,244.9],[485.5,243.0],[488.1,240.7],[491.4,240.3],[494.4,238.7],[498.6,237.9],[501.2,239.6],[502.8,241.3],[506.0,242.6],[503.5,243.8],[500.1,244.0],[496.7,244.0],[491.8,244.1],[492.1,246.0]],[[757.4,227.3],[756.6,229.5],[755.1,227.1],[751.4,226.2],[749.2,227.6],[746.9,226.0],[746.4,223.9],[745.0,221.5],[749.5,221.1],[752.4,222.5],[756.6,222.7],[754.1,224.2],[757.4,227.3]],[[562.9,188.6],[566.9,189.6],[571.0,189.7],[575.7,188.7],[579.3,189.7],[576.9,191.9],[572.5,193.4],[568.0,193.8],[563.8,194.3],[562.3,191.9],[562.3,189.1],[562.9,188.6]],[[284.6,224.7],[282.8,222.3],[284.6,224.7]],[[552.8,187.3],[554.0,189.9],[551.6,191.8],[548.0,190.2],[545.1,188.4],[549.6,186.9],[552.8,187.3]],[[565.2,167.2],[570.9,166.3],[573.9,164.1],[578.3,161.5],[581.6,162.8],[585.8,163.1],[587.2,166.6],[590.8,168.5],[587.5,169.0],[585.9,171.7],[581.3,173.2],[576.3,172.7],[570.4,172.0],[566.7,172.7],[566.1,169.2],[565.2,167.2]],[[252.4,233.9],[254.6,235.8],[252.4,233.9]],[[325.4,292.6],[321.2,293.8],[315.9,292.3],[313.6,293.7],[310.5,291.8],[309.0,290.1],[308.4,287.9],[306.7,285.8],[308.4,284.2],[307.4,281.8],[308.5,279.8],[306.9,275.9],[310.4,276.0],[313.4,275.0],[318.5,274.2],[318.3,276.8],[321.3,278.1],[325.5,278.9],[330.3,279.7],[332.6,281.4],[332.9,283.8],[338.2,283.9],[339.6,285.8],[339.8,287.9],[338.4,289.8],[335.8,288.5],[328.4,288.9],[327.0,291.1],[325.9,293.0],[325.4,292.6]],[[339.9,305.8],[343.6,303.6],[346.8,302.0],[351.0,300.4],[349.6,298.2],[349.2,295.8],[345.8,295.1],[345.0,293.1],[339.1,292.7],[339.2,290.6],[339.0,288.6],[340.3,286.7],[337.8,284.7],[332.9,283.8],[331.8,282.1],[331.9,280.1],[328.6,279.7],[324.5,278.4],[318.3,276.8],[318.5,274.2],[314.9,274.4],[311.0,275.6],[306.9,275.9],[304.2,273.8],[299.5,274.6],[297.2,273.1],[294.5,270.9],[296.9,269.6],[297.5,267.6],[300.7,266.6],[305.9,266.2],[307.1,262.2],[305.5,260.3],[307.7,258.6],[311.5,257.6],[315.8,259.0],[320.5,258.1],[324.0,256.8],[321.1,255.5],[324.7,254.5],[330.6,253.4],[334.0,253.6],[333.4,256.0],[336.0,258.1],[339.8,257.6],[344.5,257.4],[348.5,256.7],[352.9,256.9],[354.9,255.3],[357.5,253.9],[359.7,257.3],[359.2,259.7],[364.9,260.3],[370.6,261.4],[375.3,262.2],[379.4,263.4],[384.8,264.2],[388.9,264.2],[393.1,265.3],[396.6,267.0],[401.1,267.4],[403.1,269.8],[402.4,273.0],[397.1,276.0],[395.3,277.7],[392.6,279.0],[392.0,282.9],[391.2,285.2],[389.6,288.9],[386.7,290.9],[384.0,293.2],[380.3,294.1],[376.0,294.7],[370.9,295.9],[367.6,297.1],[365.3,298.7],[365.3,300.8],[364.2,303.3],[359.2,307.1],[354.8,309.2],[351.7,311.9],[350.6,308.9],[345.6,306.9],[341.7,305.6],[339.9,305.8]],[[817.2,253.5],[820.7,252.1],[819.1,253.7],[817.2,253.5]],[[754.7,218.2],[751.0,219.7],[746.8,219.3],[750.0,217.4],[753.5,217.8],[754.7,218.2]],[[571.2,287.3],[575.8,290.1],[577.8,291.8],[581.8,292.7],[577.8,293.9],[574.4,296.1],[571.6,297.6],[567.3,298.4],[563.4,298.1],[560.0,300.1],[557.7,298.7],[555.3,296.9],[555.3,292.4],[558.1,286.8],[564.4,286.2],[568.1,286.3],[571.2,287.3]],[[542.4,249.2],[545.7,248.8],[549.9,248.6],[552.5,247.5],[555.7,246.9],[560.3,244.6],[563.5,243.8],[565.4,245.4],[566.1,247.4],[569.8,248.7],[572.8,250.5],[575.6,252.0],[571.3,252.4],[567.8,252.6],[564.7,253.3],[560.2,253.9],[556.4,253.2],[552.6,253.2],[551.3,254.9],[547.6,254.6],[544.5,256.7],[542.8,255.2],[540.2,253.2],[540.4,251.0],[542.4,249.2]],[[323.2,183.8],[327.7,184.1],[321.8,184.2],[323.2,183.8]],[[328.3,178.3],[323.4,177.7],[328.2,177.9],[328.3,178.3]],[[156.9,179.7],[151.0,179.0],[147.6,177.4],[144.3,176.4],[148.1,175.5],[151.6,176.5],[155.8,178.4],[156.9,179.7]],[[344.1,174.8],[347.4,177.9],[351.5,178.0],[352.9,180.4],[352.6,183.6],[350.1,181.6],[346.1,183.1],[340.8,181.7],[335.4,181.6],[337.8,178.3],[340.7,174.7],[344.8,172.6],[344.1,174.8]],[[131.4,166.9],[133.2,169.4],[129.9,167.3],[131.4,166.9]],[[272.5,142.8],[269.3,144.6],[272.6,142.2],[272.5,142.8]],[[263.4,133.1],[267.0,134.9],[273.2,137.2],[277.5,139.6],[270.7,139.8],[266.4,140.1],[262.4,141.8],[257.7,140.2],[260.5,135.9],[263.4,133.1]],[[289.3,127.7],[285.5,126.0],[289.2,123.3],[289.3,127.7]],[[234.3,120.1],[228.8,120.3],[222.8,118.9],[227.2,115.8],[231.8,117.7],[234.3,120.1]],[[248.5,118.5],[252.2,119.5],[255.5,122.0],[257.4,127.5],[260.3,124.7],[262.4,116.9],[266.4,117.2],[270.5,117.8],[274.2,119.8],[272.3,123.9],[268.5,130.4],[264.6,130.9],[260.9,131.6],[258.2,134.6],[254.2,138.4],[250.2,138.6],[247.9,142.0],[241.2,145.0],[238.2,148.4],[237.0,154.0],[241.1,154.5],[243.6,159.1],[247.5,158.5],[252.7,159.7],[257.4,161.9],[260.9,162.6],[268.4,163.9],[271.0,166.3],[273.9,171.4],[278.0,173.6],[281.7,170.4],[280.2,166.6],[282.7,164.1],[285.8,162.3],[287.2,158.8],[281.9,154.4],[285.2,151.4],[283.0,144.1],[289.7,144.2],[294.9,143.7],[300.9,146.5],[306.7,147.9],[307.5,154.0],[312.1,156.0],[316.1,154.5],[318.8,151.4],[322.8,152.6],[326.4,156.2],[329.5,159.4],[332.0,162.5],[339.0,164.6],[341.8,167.5],[345.1,168.7],[343.3,172.3],[336.7,173.9],[333.2,175.8],[328.5,176.2],[322.6,175.7],[318.4,175.7],[313.2,177.4],[309.7,178.4],[305.7,181.3],[302.5,183.3],[309.3,180.1],[315.1,178.3],[319.3,178.1],[320.0,182.9],[324.5,185.5],[329.1,185.2],[331.9,182.9],[333.9,185.2],[330.4,186.5],[324.3,187.7],[318.4,190.0],[316.2,188.1],[321.0,186.5],[316.6,186.5],[311.7,185.6],[311.7,182.8],[307.7,181.9],[304.7,185.2],[301.7,186.5],[296.3,187.0],[292.0,187.1],[287.8,188.9],[284.1,189.8],[280.1,190.1],[277.1,192.3],[271.0,193.7],[271.0,191.1],[271.3,188.2],[267.8,185.4],[264.5,183.7],[259.8,181.7],[254.5,180.1],[251.1,180.7],[247.7,180.2],[242.8,179.8],[238.0,179.3],[229.9,178.6],[220.4,178.6],[211.0,178.6],[202.6,178.6],[194.3,178.6],[186.1,178.6],[177.6,178.6],[166.7,178.6],[158.8,178.6],[153.0,176.4],[146.0,174.5],[144.9,171.0],[141.3,170.0],[137.5,166.3],[138.9,162.1],[134.1,160.5],[131.3,157.5],[127.0,154.2],[123.7,151.6],[118.2,154.1],[113.8,151.0],[108.3,150.1],[108.4,131.8],[108.4,117.6],[113.6,118.6],[117.9,120.5],[123.3,119.2],[126.6,117.9],[130.8,118.4],[134.9,116.6],[139.5,115.6],[143.4,116.3],[150.7,118.5],[154.4,115.7],[158.2,118.2],[162.6,117.2],[166.8,119.0],[173.3,120.5],[177.1,121.1],[183.6,122.9],[179.7,124.8],[184.7,125.6],[192.2,125.2],[197.6,126.8],[199.5,121.9],[202.9,121.7],[207.4,122.3],[213.3,124.1],[218.2,125.8],[222.5,125.2],[226.5,125.3],[233.0,123.5],[237.0,124.2],[235.3,117.7],[232.0,116.0],[235.5,107.9],[239.2,108.6],[245.8,115.6],[248.5,118.5]],[[182.9,102.1],[187.7,102.9],[191.5,105.4],[194.7,102.9],[199.5,109.1],[198.9,102.2],[204.1,102.3],[209.0,108.9],[214.5,114.2],[219.5,116.3],[214.6,118.4],[210.4,120.9],[205.7,119.8],[197.2,121.4],[190.2,122.0],[185.2,122.4],[179.9,119.4],[174.1,116.5],[180.2,115.4],[184.1,115.6],[187.7,114.8],[182.4,113.8],[176.4,114.2],[172.5,114.1],[177.5,110.7],[173.2,110.7],[168.3,109.5],[172.6,104.1],[180.0,101.1],[182.9,102.1]],[[209.7,100.6],[202.9,100.4],[207.6,99.5],[209.7,100.6]],[[287.9,102.2],[282.2,103.3],[278.4,103.7],[275.3,101.0],[283.2,99.4],[287.9,102.2]],[[259.5,101.9],[264.3,101.0],[271.3,98.9],[276.1,104.1],[281.2,105.8],[290.0,106.3],[293.8,108.6],[299.3,109.5],[302.2,112.4],[308.9,114.1],[314.0,119.7],[308.9,121.6],[315.4,124.2],[319.8,125.0],[323.8,128.5],[328.2,128.7],[322.4,135.3],[319.0,133.9],[314.7,130.5],[311.1,130.9],[313.6,135.0],[317.4,136.5],[320.4,140.7],[315.9,142.1],[308.9,139.5],[312.9,142.3],[315.8,144.2],[308.7,144.0],[302.7,142.2],[299.3,140.6],[296.2,138.0],[292.1,136.4],[284.1,137.9],[288.8,134.2],[294.6,133.8],[298.2,127.2],[292.1,122.3],[286.5,120.9],[282.9,117.1],[279.2,116.9],[274.2,117.5],[264.0,116.5],[258.2,115.3],[253.7,114.6],[250.3,111.1],[251.6,102.0],[261.6,98.6],[259.5,101.9]],[[221.2,98.4],[224.5,99.5],[229.5,98.9],[231.8,104.8],[226.8,110.8],[222.2,108.7],[215.3,105.1],[221.0,104.1],[217.9,100.9],[221.2,98.4]],[[241.1,103.8],[238.1,107.4],[233.2,103.0],[237.5,96.9],[243.3,97.1],[248.6,98.4],[244.4,102.9],[241.1,103.8]],[[165.4,110.3],[158.1,112.5],[150.2,108.1],[153.3,102.6],[153.0,96.1],[162.4,95.2],[166.4,96.3],[173.5,96.6],[179.1,100.3],[175.6,101.6],[168.8,105.0],[165.4,108.3],[165.4,110.3]],[[240.0,92.3],[234.4,94.0],[231.1,92.6],[236.5,88.5],[240.0,92.3]],[[226.4,82.0],[228.6,87.9],[222.8,92.8],[219.8,88.5],[215.3,89.0],[218.1,84.6],[222.3,82.5],[226.2,82.8],[226.4,82.0]],[[199.4,85.2],[203.0,86.3],[206.4,89.5],[195.3,93.0],[188.3,95.4],[184.0,95.5],[189.5,91.3],[176.9,92.0],[173.0,90.9],[176.8,85.2],[187.2,85.6],[192.2,89.1],[197.0,89.5],[193.1,83.8],[198.5,82.3],[199.4,85.2]],[[237.0,79.6],[245.5,81.6],[250.5,87.3],[256.0,89.0],[260.1,89.5],[264.5,88.2],[270.1,87.7],[274.6,88.1],[278.2,92.6],[272.4,95.3],[268.8,94.6],[260.8,95.4],[255.1,95.5],[250.7,94.9],[243.3,93.1],[239.2,84.5],[233.4,83.7],[237.0,79.6]],[[177.2,76.0],[174.7,83.2],[166.9,86.1],[162.5,87.0],[158.7,85.7],[163.5,81.1],[169.2,76.9],[173.4,77.0],[177.2,76.0]],[[239.3,76.8],[232.9,76.6],[237.7,74.8],[239.3,76.8]],[[193.9,75.6],[188.7,77.6],[184.6,75.4],[190.9,72.5],[194.8,73.6],[193.9,75.6]],[[195.4,69.3],[192.0,70.7],[187.4,70.7],[191.8,67.8],[195.4,69.3]],[[233.8,73.2],[229.7,74.6],[226.2,70.3],[229.6,67.6],[234.6,70.6],[233.8,73.2]],[[222.1,71.3],[218.6,73.4],[214.0,71.1],[207.8,70.9],[212.4,65.0],[219.9,67.8],[222.1,71.3]],[[258.3,61.2],[261.6,63.7],[257.8,66.0],[252.7,71.5],[247.8,72.0],[242.0,71.1],[239.1,65.4],[233.1,60.8],[235.2,50.5],[243.3,47.2],[246.9,52.1],[251.5,54.0],[256.1,55.7],[258.3,61.2]],[[309.7,27.5],[317.1,28.4],[323.1,29.9],[328.2,33.0],[321.3,40.6],[314.6,42.6],[318.1,44.8],[311.6,50.5],[307.0,53.1],[302.3,60.0],[296.5,61.4],[286.4,63.8],[290.2,64.8],[287.9,72.3],[283.6,74.2],[278.4,78.9],[283.6,80.1],[276.2,85.4],[269.0,83.7],[260.8,84.6],[256.7,83.9],[251.4,83.6],[256.2,79.1],[264.0,76.7],[260.2,72.3],[255.7,70.9],[262.8,66.3],[259.7,60.5],[266.1,56.6],[272.6,54.4],[266.4,53.4],[256.7,54.0],[251.8,50.9],[246.2,44.3],[249.7,38.9],[258.4,36.9],[262.5,32.8],[265.9,33.4],[271.1,30.4],[274.7,28.5],[279.7,27.2],[288.2,26.7],[297.7,25.9],[303.7,26.7],[309.7,27.5]],[[526.7,181.8],[528.8,184.0],[524.9,184.9],[521.5,185.4],[518.1,184.1],[520.0,181.9],[523.7,181.1],[526.7,181.8]],[[309.3,349.7],[309.4,355.2],[314.0,355.3],[310.7,357.1],[305.7,356.0],[299.3,354.3],[292.6,350.2],[298.8,352.3],[302.5,353.2],[304.8,350.4],[309.3,349.7]],[[310.5,291.8],[311.6,294.0],[313.0,295.8],[310.0,299.2],[308.3,301.4],[305.5,304.4],[304.1,307.8],[305.3,310.7],[304.5,314.3],[302.4,317.0],[303.3,320.4],[300.9,322.8],[300.7,327.1],[300.2,329.7],[302.2,332.5],[300.2,336.9],[299.1,339.8],[296.1,342.1],[297.3,345.3],[300.2,348.3],[306.9,348.6],[303.2,350.4],[298.5,351.9],[295.3,350.2],[291.8,348.9],[291.7,346.0],[290.0,340.7],[294.1,337.0],[289.9,336.4],[292.5,334.5],[293.5,331.1],[298.0,327.7],[295.3,329.7],[294.4,326.6],[295.3,323.0],[295.8,319.9],[296.8,317.8],[298.5,314.9],[300.4,312.1],[301.6,309.5],[300.9,307.0],[301.4,303.6],[303.0,301.6],[303.5,298.4],[304.4,295.1],[305.3,291.6],[305.1,289.1],[304.5,287.0],[308.1,286.8],[309.9,288.6],[310.5,291.8]],[[806.5,232.5],[801.8,232.8],[803.1,230.8],[807.7,230.4],[806.5,232.5]],[[854.6,176.9],[859.4,177.6],[862.7,179.2],[868.1,181.2],[875.1,179.7],[872.5,182.4],[869.7,186.8],[866.3,186.4],[864.7,188.9],[862.9,191.3],[855.7,193.0],[850.5,194.8],[847.4,195.8],[841.3,197.5],[836.3,198.9],[839.4,196.1],[835.5,195.7],[832.3,197.1],[827.9,198.4],[830.2,200.8],[835.6,200.8],[839.9,201.6],[836.4,203.0],[832.4,204.9],[834.0,207.1],[836.7,210.4],[838.6,212.9],[838.7,216.2],[834.4,219.4],[832.2,221.5],[829.6,223.4],[825.8,224.9],[821.9,226.2],[817.1,227.1],[810.7,228.1],[806.8,230.0],[805.2,228.4],[801.5,227.9],[797.3,227.7],[793.9,225.9],[790.2,226.1],[785.3,226.3],[782.8,228.7],[778.9,228.1],[775.7,227.2],[774.1,224.2],[771.5,222.6],[774.1,221.2],[774.1,218.6],[770.4,217.4],[767.0,215.4],[762.7,215.7],[759.5,216.8],[754.7,218.2],[750.0,217.4],[746.7,219.0],[741.5,217.9],[736.1,216.8],[733.1,215.7],[728.7,214.3],[725.3,214.2],[721.4,213.1],[717.9,210.1],[719.2,207.2],[716.2,205.1],[711.6,204.4],[708.8,202.2],[708.0,199.9],[704.7,197.9],[707.7,196.2],[712.6,196.1],[717.2,194.6],[722.6,192.8],[724.6,190.7],[722.1,187.2],[727.6,186.4],[731.1,182.2],[736.6,182.9],[738.2,179.8],[742.7,178.1],[746.8,180.6],[750.8,181.4],[751.6,185.6],[755.9,186.8],[759.7,187.1],[763.0,188.4],[766.0,190.4],[770.7,191.6],[776.4,192.0],[780.1,191.7],[787.0,193.2],[790.3,193.2],[794.8,192.8],[799.3,192.1],[803.5,192.0],[806.7,191.3],[810.6,189.6],[810.8,186.8],[815.2,187.4],[822.2,185.6],[826.2,183.6],[830.2,183.3],[828.0,180.6],[823.1,181.1],[822.8,178.3],[827.4,177.4],[831.4,176.0],[833.8,172.6],[836.1,168.8],[839.6,168.3],[843.3,168.3],[847.4,169.0],[851.6,172.3],[853.6,174.7],[854.6,176.9]],[[492.1,252.8],[487.1,252.5],[481.9,253.2],[478.6,253.7],[479.0,251.7],[476.1,250.6],[476.6,248.9],[477.6,246.4],[481.0,245.3],[485.0,244.9],[488.0,246.1],[492.1,246.0],[492.9,248.1],[491.0,251.0],[492.1,252.8]],[[536.3,256.7],[532.6,256.6],[526.8,256.7],[526.1,254.6],[523.6,253.1],[525.6,250.7],[529.2,249.8],[532.6,249.9],[533.9,248.0],[536.0,246.3],[537.7,244.3],[540.2,242.7],[543.0,245.5],[539.4,245.5],[541.6,247.2],[542.4,249.2],[540.4,251.0],[540.2,253.2],[542.8,255.2],[544.5,256.7],[539.8,256.8],[536.3,256.7]],[[585.6,254.9],[586.6,256.8],[583.6,258.5],[582.8,260.3],[581.4,262.3],[580.6,264.1],[581.5,266.5],[581.7,268.6],[583.9,270.3],[585.4,272.1],[580.6,272.2],[579.6,273.9],[578.8,277.2],[582.3,277.7],[580.4,279.3],[578.2,277.9],[573.8,277.3],[570.6,276.5],[567.4,275.9],[563.4,276.0],[561.7,274.4],[561.0,272.0],[557.0,270.6],[553.2,271.2],[548.5,271.7],[546.0,269.6],[537.2,268.5],[537.8,266.5],[542.1,266.3],[544.4,263.9],[546.8,261.8],[549.1,260.1],[549.7,257.5],[551.1,255.8],[551.5,253.9],[554.1,252.7],[558.1,253.8],[562.2,254.2],[567.8,252.6],[571.3,252.4],[575.1,252.6],[579.0,253.8],[582.5,253.3],[585.6,254.9]],[[536.1,266.9],[530.8,265.8],[531.9,264.0],[534.9,262.8],[538.9,263.6],[540.1,261.9],[538.5,259.9],[539.7,258.3],[536.1,257.4],[539.8,256.8],[544.3,257.5],[545.9,255.4],[549.5,254.9],[550.3,256.6],[549.4,258.8],[549.0,260.6],[545.6,262.5],[544.5,265.1],[540.5,267.2],[536.8,267.1],[536.1,266.9]],[[290.6,260.2],[287.3,259.6],[284.3,258.8],[281.0,258.0],[282.1,256.2],[285.8,254.4],[284.6,251.9],[283.7,249.5],[284.8,247.6],[288.6,246.5],[290.3,244.6],[293.7,243.9],[298.3,242.9],[301.7,242.0],[299.4,243.9],[297.1,245.9],[298.8,247.8],[300.1,249.9],[303.7,249.7],[307.3,251.2],[312.0,250.9],[311.6,253.5],[313.0,255.2],[314.2,258.2],[306.1,257.5],[307.6,259.1],[307.2,261.6],[305.9,266.2],[305.4,263.9],[301.6,263.4],[297.0,263.3],[295.4,261.8],[291.4,260.1],[290.6,260.2]],[[269.5,248.1],[266.9,246.5],[264.0,245.4],[261.3,244.2],[264.8,243.9],[268.3,244.9],[269.6,246.8],[269.5,248.1]],[[271.5,225.6],[276.1,225.7],[279.8,226.8],[283.4,227.0],[287.4,228.6],[291.9,229.4],[288.0,230.6],[284.0,230.7],[282.0,228.9],[277.2,227.7],[272.7,227.1],[268.1,227.1],[264.0,227.6],[267.3,226.2],[270.8,225.7],[271.5,225.6]],[[590.9,205.7],[596.0,204.8],[593.1,205.9],[590.9,205.7]],[[594.4,205.9],[590.3,206.5],[593.5,205.9],[594.4,205.9]],[[547.1,179.5],[542.4,178.5],[537.8,178.8],[534.8,177.4],[537.1,174.7],[540.5,174.1],[545.1,174.8],[548.8,175.5],[552.4,177.5],[548.7,179.0],[547.1,179.5]],[[527.6,164.5],[530.4,166.1],[534.8,165.8],[539.2,167.6],[540.8,171.6],[539.0,174.3],[534.0,175.8],[536.2,177.9],[536.2,181.5],[531.7,181.8],[527.5,181.7],[523.7,181.1],[522.5,178.5],[518.5,178.1],[517.1,174.5],[519.0,171.2],[519.2,168.2],[522.6,168.1],[523.7,164.6],[527.6,164.5]],[[619.7,241.5],[619.8,243.3],[616.0,243.9],[617.6,241.7],[619.7,241.5]],[[535.3,162.9],[530.7,163.6],[534.4,161.6],[535.3,162.9]],[[530.3,160.7],[526.8,163.3],[523.7,164.6],[522.5,160.5],[526.2,158.8],[529.4,157.4],[530.3,160.7]],[[300.8,230.9],[305.0,231.1],[308.9,232.1],[305.7,232.9],[301.7,234.2],[300.8,232.4],[300.8,230.9]],[[533.3,225.1],[523.8,228.1],[515.8,231.1],[511.9,231.8],[508.7,231.0],[505.1,229.6],[495.7,226.2],[486.3,222.7],[475.9,218.8],[475.9,216.5],[480.4,215.2],[485.4,214.5],[489.7,213.0],[492.7,211.0],[496.4,210.7],[495.2,207.9],[494.0,205.7],[499.6,204.4],[504.1,203.1],[508.8,202.8],[513.4,202.6],[517.4,202.2],[521.5,202.6],[523.3,205.1],[520.9,207.6],[523.4,209.9],[526.3,214.0],[527.4,216.3],[527.1,218.4],[525.9,220.9],[527.6,222.8],[532.1,224.1],[533.3,225.1]],[[276.9,264.9],[277.8,263.2],[275.2,261.5],[277.7,259.5],[281.0,258.0],[284.3,258.8],[287.3,259.6],[290.6,260.2],[290.2,262.3],[287.1,263.8],[283.8,264.3],[281.6,266.6],[277.7,266.3],[276.9,264.9]],[[597.0,215.4],[595.6,217.3],[592.0,217.2],[590.1,214.8],[592.6,218.3],[594.7,220.9],[596.7,222.6],[599.1,224.4],[601.9,227.1],[591.4,227.4],[580.6,227.4],[569.4,227.4],[569.4,221.6],[569.4,215.8],[569.3,213.4],[573.6,211.9],[579.0,212.8],[582.5,212.5],[586.0,211.9],[589.4,212.4],[593.8,212.9],[597.0,215.4]],[[617.6,241.7],[614.3,239.9],[611.2,238.8],[607.0,238.8],[601.2,238.9],[602.1,236.1],[605.3,234.4],[608.3,235.3],[610.6,237.4],[614.4,238.8],[617.4,240.5],[617.6,241.7]],[[474.9,193.3],[473.9,191.0],[477.8,189.6],[481.2,189.9],[485.0,189.9],[490.2,190.2],[494.7,190.2],[500.9,191.9],[505.1,192.4],[508.4,193.2],[502.3,194.9],[499.2,198.2],[498.1,201.2],[494.0,203.0],[490.5,203.0],[486.1,203.6],[482.7,203.5],[479.3,202.2],[479.5,199.9],[479.2,197.6],[481.0,194.7],[477.7,193.4],[474.9,193.3]],[[567.5,157.2],[565.1,154.9],[568.3,152.5],[571.8,152.1],[577.7,152.5],[577.0,157.2],[573.5,158.0],[569.9,156.7],[567.5,157.2]],[[605.3,238.1],[608.6,238.5],[613.6,239.4],[616.7,241.3],[615.7,243.1],[618.8,244.1],[620.3,246.2],[630.4,248.4],[624.9,252.8],[621.3,252.8],[617.0,253.9],[613.2,253.8],[609.9,255.1],[605.9,254.8],[602.4,253.6],[599.5,252.3],[596.4,250.5],[593.2,248.8],[594.3,246.1],[596.5,244.1],[597.9,242.4],[600.8,240.2],[604.4,239.3],[605.3,238.1]],[[579.4,120.2],[583.3,125.6],[583.9,132.5],[584.6,138.0],[587.5,142.3],[583.9,145.7],[578.0,149.5],[572.9,149.8],[568.0,150.8],[563.5,151.5],[559.2,148.9],[558.5,143.2],[562.3,139.3],[568.7,135.7],[566.4,131.8],[565.4,124.7],[561.1,122.0],[557.3,120.1],[562.1,121.1],[565.7,120.9],[571.4,120.1],[577.0,115.7],[580.6,117.4],[579.4,120.2]],[[995.5,285.4],[992.7,286.7],[995.5,285.4]],[[330.0,347.9],[333.3,346.5],[337.4,346.1],[335.0,348.7],[331.4,348.9],[330.0,347.9]],[[354.0,256.4],[350.6,256.6],[350.0,254.8],[348.7,252.9],[353.1,252.2],[356.0,253.4],[354.9,255.3],[354.0,256.4]],[[510.0,175.5],[513.3,176.4],[516.4,177.6],[522.5,178.5],[520.7,181.6],[516.8,183.5],[518.9,185.6],[519.5,188.6],[518.1,190.8],[512.7,190.3],[508.6,190.9],[505.1,192.4],[501.9,191.5],[495.8,191.0],[496.7,185.0],[493.8,182.8],[487.5,180.9],[490.8,178.8],[495.5,179.4],[503.7,176.1],[507.0,173.7],[510.0,175.5]],[[530.8,265.8],[528.0,264.3],[524.4,261.6],[525.8,259.6],[531.3,258.5],[531.3,256.7],[536.0,256.6],[539.0,258.0],[538.5,259.9],[540.1,261.9],[538.9,263.6],[534.9,262.8],[531.9,264.0],[530.8,265.8]],[[484.3,165.6],[480.7,166.8],[479.0,164.1],[484.3,165.6]],[[491.7,154.9],[488.7,157.8],[494.6,157.5],[491.3,162.0],[496.9,165.4],[500.5,168.6],[504.7,170.0],[504.0,173.4],[497.8,174.6],[493.1,175.2],[487.4,175.6],[484.0,176.0],[488.0,173.6],[485.4,171.8],[487.3,168.2],[491.4,168.4],[490.0,165.5],[486.5,165.0],[484.3,161.2],[483.9,157.1],[488.3,155.1],[491.7,154.9]],[[615.4,193.9],[613.5,191.0],[617.8,190.6],[621.5,191.6],[626.3,192.1],[629.5,194.6],[625.6,194.2],[621.1,194.8],[615.4,193.9]],[[502.9,251.4],[498.6,252.3],[494.5,253.2],[491.0,251.0],[492.9,248.1],[492.1,246.0],[491.8,244.1],[496.7,244.0],[500.1,244.0],[501.0,246.3],[502.0,248.0],[501.6,250.0],[502.9,251.4]],[[476.6,248.9],[472.9,247.6],[469.9,245.9],[466.2,245.7],[463.2,247.1],[460.9,245.6],[458.8,244.2],[461.4,243.0],[465.3,242.0],[468.6,242.4],[472.5,242.4],[476.7,243.4],[477.7,245.2],[478.2,247.6],[476.6,248.9]],[[453.2,240.8],[456.6,240.1],[460.1,240.1],[456.4,240.7],[453.2,240.8]],[[458.0,244.0],[454.7,242.8],[461.9,241.7],[460.0,243.3],[458.0,244.0]],[[526.4,258.5],[526.8,256.7],[531.3,256.7],[531.3,258.5],[527.3,258.5],[526.4,258.5]],[[565.8,204.7],[569.5,205.2],[573.0,205.4],[568.7,206.1],[565.3,205.5],[565.8,204.7]],[[573.9,193.9],[570.7,195.2],[565.9,195.6],[563.5,197.5],[565.4,199.6],[563.3,201.8],[559.2,201.2],[557.6,199.2],[557.3,196.7],[560.2,195.1],[563.8,194.3],[568.0,193.8],[572.5,194.3],[573.9,193.9]],[[370.1,33.0],[379.4,26.0],[389.2,26.6],[392.7,22.0],[402.5,20.7],[424.7,22.4],[442.1,31.9],[437.0,36.2],[426.3,36.7],[411.4,37.7],[422.6,38.5],[431.0,42.0],[436.4,38.9],[442.7,44.6],[456.2,40.7],[464.5,42.7],[454.8,53.4],[444.3,56.9],[450.7,57.3],[447.5,63.2],[445.4,76.0],[448.7,80.3],[444.3,80.6],[439.8,82.6],[444.9,85.8],[442.6,91.3],[446.2,96.0],[440.0,96.4],[443.2,98.6],[438.4,101.1],[434.5,101.2],[438.0,104.5],[432.6,104.7],[438.5,109.9],[434.6,114.4],[429.0,110.1],[426.8,115.4],[434.1,115.6],[437.9,115.8],[430.5,119.5],[422.9,122.6],[414.8,124.0],[408.9,125.5],[405.0,129.4],[399.0,131.9],[393.4,132.9],[389.4,133.7],[387.0,138.2],[381.1,142.9],[380.9,147.9],[375.6,150.9],[371.5,148.5],[365.9,148.5],[361.4,143.9],[356.6,139.9],[354.8,134.7],[350.9,131.5],[352.8,123.1],[357.0,121.6],[358.7,116.7],[354.0,118.8],[348.1,118.0],[349.0,112.8],[357.2,113.9],[352.5,111.1],[347.2,110.2],[348.0,104.7],[344.1,99.4],[340.8,93.8],[337.2,91.6],[329.8,85.8],[323.9,85.4],[316.5,85.6],[309.7,86.1],[306.5,84.1],[301.7,80.2],[309.0,78.1],[314.5,77.8],[302.7,76.0],[296.4,73.2],[307.3,67.0],[317.5,63.3],[311.0,57.4],[323.1,47.6],[327.1,46.6],[332.5,39.5],[341.1,37.8],[349.6,37.7],[360.0,35.1],[366.7,39.2],[370.6,40.0],[376.3,43.3],[369.7,37.7],[370.1,33.0]],[[249.7,240.0],[245.3,239.4],[243.8,237.7],[248.7,236.5],[246.0,234.7],[249.8,233.8],[252.4,235.1],[253.9,237.0],[251.8,238.9],[249.7,240.0]],[[334.0,247.9],[337.5,249.4],[340.2,250.9],[340.8,252.7],[338.8,254.1],[341.2,256.0],[339.8,257.6],[336.0,258.1],[333.4,256.0],[334.6,254.3],[332.7,252.4],[329.4,251.4],[331.8,250.1],[334.0,247.9]],[[257.5,241.1],[255.4,239.6],[251.8,238.9],[254.9,237.0],[258.6,236.9],[262.0,236.7],[265.6,236.8],[269.0,238.1],[265.4,238.6],[261.9,239.6],[259.1,240.7],[257.5,241.1]],[[552.3,185.2],[549.6,186.9],[545.9,186.6],[547.0,189.7],[551.6,191.8],[547.0,190.7],[542.2,188.6],[539.6,186.6],[543.5,185.3],[546.9,184.2],[551.3,185.5],[552.3,185.2]],[[296.7,230.6],[300.8,230.9],[300.9,233.1],[296.0,233.2],[299.1,232.5],[296.1,231.1],[296.7,230.6]],[[545.0,183.2],[547.2,180.5],[551.9,181.0],[556.2,180.1],[560.8,180.1],[560.1,182.9],[556.2,184.7],[552.3,185.2],[549.0,185.1],[545.5,183.2],[545.0,183.2]],[[835.3,274.9],[830.5,273.9],[834.5,274.0],[835.3,274.9]],[[845.7,274.7],[847.1,272.9],[845.7,274.7]],[[827.5,271.7],[830.9,272.6],[825.8,273.1],[827.5,271.7]],[[841.4,271.7],[836.8,273.0],[833.1,272.8],[837.1,272.4],[841.4,271.7]],[[801.7,269.8],[807.1,270.0],[812.8,270.1],[818.0,271.3],[821.4,272.1],[818.2,272.7],[812.7,272.1],[807.2,271.8],[804.0,271.2],[795.7,270.7],[794.6,268.5],[798.0,268.6],[801.4,269.3],[801.7,269.8]],[[853.5,265.0],[850.0,264.6],[853.5,265.0]],[[862.4,264.5],[858.8,264.9],[855.3,264.9],[859.4,264.0],[862.4,264.5]],[[872.6,261.7],[873.4,264.0],[878.6,263.3],[881.8,262.5],[886.6,263.0],[891.7,263.8],[891.7,268.5],[891.8,273.2],[889.3,272.0],[885.8,272.1],[882.3,272.2],[885.2,270.6],[883.1,267.8],[877.7,266.6],[871.3,265.1],[866.6,264.1],[871.6,263.6],[867.3,263.2],[863.7,262.1],[867.7,260.5],[872.2,261.1],[872.6,261.7]],[[847.9,257.9],[845.7,259.4],[840.9,259.4],[836.3,259.4],[833.4,260.8],[835.9,262.0],[842.6,260.9],[840.0,262.2],[840.2,264.6],[842.1,266.8],[838.2,267.0],[835.8,265.2],[834.5,268.0],[832.4,266.4],[829.9,264.0],[831.5,262.0],[832.8,259.8],[835.8,258.1],[841.5,258.7],[847.4,257.6],[847.9,257.9]],[[857.5,258.4],[855.5,260.4],[853.9,258.5],[855.4,256.9],[857.5,258.4]],[[827.4,257.4],[830.5,258.7],[826.3,259.9],[823.8,262.1],[822.6,265.8],[819.1,265.9],[816.0,265.0],[811.3,265.0],[806.2,264.2],[805.8,262.3],[803.0,260.7],[803.0,258.1],[807.0,258.9],[810.5,258.7],[813.5,257.8],[818.4,257.9],[819.8,255.9],[821.8,253.8],[827.5,254.0],[827.9,256.7],[827.4,257.4]],[[793.9,268.5],[788.5,267.3],[785.0,266.1],[781.7,264.0],[778.2,260.9],[775.7,259.7],[773.9,257.4],[769.9,255.2],[764.9,252.8],[770.8,252.4],[773.2,253.8],[776.9,255.4],[779.6,257.0],[784.7,258.0],[788.4,259.8],[789.9,261.6],[791.4,263.4],[794.7,264.4],[794.0,266.2],[793.9,268.5]],[[716.2,205.1],[719.2,207.2],[720.0,209.5],[718.7,212.0],[725.3,214.2],[722.5,216.5],[727.8,218.0],[731.4,218.9],[735.2,219.1],[739.0,220.1],[742.3,220.4],[744.6,218.7],[749.3,219.9],[753.4,219.8],[757.0,218.0],[762.7,215.7],[767.0,215.4],[770.4,217.4],[767.8,219.0],[764.2,220.2],[762.8,222.4],[761.4,224.5],[758.5,226.3],[756.0,224.9],[756.6,222.7],[752.4,222.5],[749.5,221.1],[746.0,220.4],[747.0,222.3],[745.9,224.9],[747.3,227.3],[741.6,228.2],[740.3,230.3],[736.3,231.3],[733.2,233.1],[728.3,235.1],[724.4,236.7],[722.9,239.8],[721.8,242.5],[721.8,245.0],[719.1,246.1],[716.5,248.0],[712.8,247.1],[711.5,245.0],[709.4,242.9],[707.3,239.6],[704.3,236.6],[703.1,233.7],[702.3,231.7],[702.3,229.9],[697.7,229.3],[692.1,227.3],[689.4,224.8],[697.3,223.7],[695.2,221.5],[693.1,219.6],[696.2,217.9],[702.3,216.3],[706.7,212.9],[709.1,210.7],[705.8,208.7],[706.2,206.4],[710.4,206.8],[716.2,205.1]],[[482.8,167.3],[481.1,171.2],[476.2,172.5],[472.3,172.2],[474.5,169.7],[476.9,165.3],[480.7,166.8],[482.8,167.3]],[[649.8,202.0],[654.2,200.6],[659.3,200.5],[662.3,201.5],[667.7,203.3],[670.0,204.8],[668.9,207.0],[668.2,209.5],[669.3,211.9],[669.1,214.8],[671.6,216.7],[674.3,218.9],[671.9,220.7],[670.8,222.6],[665.6,222.1],[659.4,221.5],[658.3,219.5],[654.8,219.5],[648.6,219.8],[645.8,218.5],[641.3,216.5],[639.2,214.3],[634.9,214.7],[632.5,212.9],[631.5,210.4],[628.1,209.4],[626.8,206.4],[626.2,204.2],[624.4,202.1],[622.5,197.9],[626.3,199.0],[632.5,197.8],[635.1,200.1],[639.3,201.7],[645.2,202.9],[649.5,202.5],[649.8,202.0]],[[626.2,204.2],[626.8,206.4],[628.1,209.4],[631.5,210.4],[632.5,212.9],[634.9,214.7],[631.4,214.4],[629.4,216.0],[624.2,215.9],[616.4,212.5],[612.2,211.4],[608.9,210.9],[607.8,208.8],[613.9,207.0],[615.0,204.9],[617.6,202.0],[622.1,201.9],[626.2,204.2]],[[459.7,130.2],[462.2,134.9],[458.6,137.5],[450.6,139.7],[444.5,139.8],[436.8,138.8],[433.5,135.7],[438.4,135.0],[432.4,133.2],[438.5,130.4],[442.8,132.8],[447.1,130.9],[450.6,131.9],[455.1,130.0],[459.7,130.2]],[[599.2,210.0],[597.1,211.8],[597.0,215.4],[595.2,212.5],[597.1,209.8],[599.2,210.0]],[[543.1,200.2],[541.9,203.1],[538.4,202.2],[534.5,201.3],[538.2,200.5],[543.1,200.2]],[[525.6,194.6],[526.9,198.4],[523.4,198.4],[523.3,196.1],[525.6,194.6]],[[534.4,183.4],[538.4,183.9],[534.2,186.3],[535.0,188.9],[539.0,191.5],[542.1,193.1],[546.6,194.6],[551.0,196.2],[546.9,196.0],[547.4,198.9],[544.7,200.6],[543.7,197.7],[540.8,195.7],[537.9,194.6],[533.6,193.6],[529.2,191.2],[527.0,189.0],[523.4,188.6],[519.5,188.6],[518.9,185.6],[523.1,184.7],[527.6,184.3],[530.7,183.4],[534.4,183.4]],[[284.5,232.8],[287.9,233.3],[284.0,233.8],[284.5,232.8]],[[598.7,210.5],[602.3,210.6],[607.8,208.8],[608.9,210.9],[602.8,212.0],[605.6,213.7],[602.1,214.8],[597.1,215.6],[598.4,212.7],[598.7,210.5]],[[874.0,207.5],[870.2,209.0],[872.0,207.1],[874.0,207.5]],[[891.6,202.1],[891.0,204.5],[886.0,206.6],[881.2,206.7],[877.2,208.7],[875.2,206.7],[870.4,207.1],[867.1,207.9],[864.8,212.1],[862.4,210.6],[859.5,208.9],[863.6,207.3],[868.4,205.2],[873.9,204.7],[879.8,201.8],[885.7,200.9],[889.0,197.9],[889.7,194.6],[894.2,196.9],[891.6,200.3],[891.6,202.1]],[[899.8,188.7],[903.7,188.3],[900.2,191.1],[897.7,193.0],[893.4,191.7],[891.9,193.8],[888.4,191.9],[892.7,190.3],[893.5,187.5],[897.6,188.1],[899.8,188.7]],[[697.1,192.5],[691.9,194.2],[685.3,194.6],[683.6,191.1],[680.3,189.6],[675.5,189.8],[669.6,188.3],[663.0,186.0],[655.4,187.1],[655.5,194.4],[652.1,192.9],[647.1,192.8],[642.6,190.8],[639.8,188.5],[642.5,186.6],[647.3,186.5],[647.3,183.2],[642.2,182.8],[639.0,183.7],[635.0,183.8],[633.5,181.3],[629.1,179.9],[632.1,175.3],[641.0,172.5],[645.4,172.4],[651.5,174.0],[654.8,174.9],[662.1,173.9],[665.7,175.1],[670.4,174.5],[666.6,171.9],[671.4,169.4],[681.1,166.1],[689.4,164.5],[696.8,164.0],[700.6,166.0],[704.2,166.9],[713.6,165.7],[716.1,168.4],[722.3,174.4],[727.6,174.5],[731.6,173.9],[734.5,175.7],[737.6,177.0],[741.2,176.7],[740.6,179.6],[738.1,181.9],[731.1,182.2],[729.1,185.9],[722.1,187.2],[724.6,190.7],[721.2,192.1],[715.7,191.2],[711.1,191.1],[706.1,190.5],[699.6,191.4],[697.1,192.5]],[[613.9,261.2],[613.6,263.0],[611.4,264.7],[608.9,266.8],[604.9,265.3],[594.6,261.5],[594.9,259.3],[597.3,257.2],[596.1,255.6],[594.5,253.9],[598.1,252.0],[600.4,253.6],[605.9,254.8],[609.9,255.1],[613.2,253.8],[613.8,256.0],[613.9,261.2]],[[697.1,192.5],[704.1,192.1],[710.1,191.3],[715.7,191.2],[719.8,191.4],[722.9,192.4],[718.2,193.8],[713.6,194.8],[709.6,195.8],[705.1,197.1],[699.4,198.2],[696.0,197.6],[699.4,196.6],[702.9,195.2],[699.6,194.2],[695.6,194.0],[697.1,192.5]],[[787.5,244.6],[785.0,242.3],[784.3,240.5],[789.7,239.0],[794.6,239.8],[798.3,239.3],[798.6,242.0],[793.9,243.2],[789.8,244.8],[787.5,244.6]],[[856.5,199.5],[858.9,201.6],[859.6,204.9],[856.1,206.2],[851.3,207.0],[851.6,204.8],[852.4,202.6],[853.0,200.1],[856.5,199.5]],[[557.7,192.9],[557.8,190.5],[559.9,192.6],[557.7,192.9]],[[633.3,214.6],[634.5,216.9],[629.4,216.0],[631.4,214.4],[633.3,214.6]],[[792.3,239.2],[793.3,237.2],[790.9,234.4],[786.7,233.1],[780.7,234.3],[781.3,231.3],[778.1,229.9],[781.1,228.3],[783.8,226.7],[786.7,229.3],[790.1,229.3],[788.6,231.6],[791.9,232.5],[794.2,234.3],[798.1,236.7],[798.3,239.3],[794.6,239.8],[792.3,239.2]],[[599.5,209.0],[599.9,206.7],[599.5,209.0]],[[478.6,253.7],[475.0,253.0],[470.1,251.1],[469.0,249.3],[471.6,247.8],[473.9,249.1],[476.1,250.6],[479.0,251.7],[478.6,253.7]],[[541.3,226.1],[537.7,225.8],[533.3,225.1],[529.9,223.4],[525.9,220.9],[527.1,218.4],[527.4,216.3],[526.3,214.0],[529.5,211.6],[531.9,209.2],[535.2,209.8],[538.7,210.0],[542.3,210.7],[546.1,212.6],[550.1,213.3],[554.4,213.7],[555.1,211.6],[557.9,210.0],[563.6,210.1],[566.5,211.1],[569.9,211.9],[568.6,214.5],[569.4,221.6],[569.4,227.4],[569.4,230.5],[566.2,231.1],[555.1,228.2],[544.1,225.2],[541.3,226.1]],[[727.2,249.1],[725.6,251.0],[721.9,250.2],[721.4,248.1],[722.6,245.7],[725.8,247.6],[727.2,249.1]],[[580.5,303.7],[578.6,305.8],[575.0,305.3],[578.0,303.6],[580.5,303.7]],[[563.1,166.2],[559.1,164.0],[561.7,161.0],[566.3,161.2],[570.9,161.7],[573.9,164.1],[570.9,166.3],[565.2,167.2],[563.1,166.2]],[[558.5,161.8],[559.9,158.2],[564.8,159.3],[567.5,157.2],[571.1,157.0],[575.8,158.0],[578.3,161.5],[573.6,162.9],[569.4,161.5],[561.7,161.0],[558.5,161.8]],[[485.6,204.6],[489.9,205.3],[494.0,205.7],[495.2,207.9],[496.9,210.1],[492.7,211.0],[489.7,213.0],[486.5,213.7],[483.2,215.0],[475.9,216.5],[475.6,219.3],[471.7,219.7],[468.4,219.7],[465.3,223.1],[461.4,224.8],[460.5,226.9],[452.8,228.3],[454.8,226.4],[457.1,223.7],[458.9,221.7],[461.7,220.1],[463.5,218.4],[467.5,217.6],[471.1,216.0],[472.7,212.6],[474.2,210.2],[478.7,208.3],[482.7,205.7],[485.6,204.6]],[[573.9,180.3],[578.5,180.4],[581.7,182.2],[579.6,185.1],[576.5,182.0],[573.9,180.3]],[[637.6,278.2],[639.0,279.8],[639.5,281.6],[639.4,283.4],[637.5,285.1],[636.2,288.1],[634.9,290.3],[633.1,293.2],[632.1,295.4],[630.8,297.2],[626.1,298.3],[622.3,297.3],[621.4,295.1],[620.2,292.7],[621.9,290.8],[623.5,288.6],[622.1,285.5],[623.5,283.7],[627.4,283.1],[632.5,281.3],[635.7,279.1],[637.6,278.2]],[[230.2,221.3],[228.6,223.8],[228.4,226.0],[229.5,228.3],[231.9,230.7],[233.6,232.3],[237.7,233.3],[242.3,232.8],[246.1,232.2],[248.5,230.7],[251.1,228.6],[256.5,228.3],[257.3,230.1],[256.7,232.0],[253.2,233.7],[249.8,233.8],[246.0,234.7],[248.8,236.0],[245.1,236.5],[243.9,238.3],[240.7,237.2],[237.0,236.3],[233.2,237.0],[229.8,236.7],[225.1,235.7],[219.9,234.8],[216.9,233.7],[212.5,233.1],[208.4,231.6],[206.3,229.8],[206.7,227.6],[203.0,224.6],[200.2,223.4],[196.5,221.8],[195.0,220.0],[192.7,218.1],[189.6,217.1],[186.6,214.5],[183.7,211.9],[181.5,214.3],[184.5,216.1],[186.8,218.2],[190.0,220.0],[191.7,222.2],[194.0,223.9],[196.0,225.6],[191.8,224.3],[188.4,223.1],[188.1,221.1],[184.8,219.8],[180.4,218.3],[182.9,216.9],[179.1,215.3],[177.1,213.1],[174.6,210.3],[181.3,209.9],[185.3,211.1],[191.6,212.3],[197.1,212.3],[204.1,211.6],[208.2,213.5],[209.8,215.3],[213.6,216.2],[217.6,214.9],[221.0,216.7],[223.6,218.6],[224.9,220.5],[229.1,221.3],[230.2,221.3]],[[557.2,193.3],[560.9,192.4],[563.8,194.3],[560.2,195.1],[556.8,194.0],[557.2,193.3]],[[466.2,238.7],[470.4,237.9],[484.6,237.3],[483.4,229.5],[482.1,222.8],[486.3,222.7],[495.7,226.2],[505.1,229.6],[508.7,231.0],[511.9,231.8],[511.9,235.3],[510.1,237.2],[503.8,237.6],[499.3,238.2],[494.4,238.7],[491.8,239.9],[488.1,240.7],[485.5,243.0],[485.0,244.9],[481.5,244.8],[478.1,245.0],[475.6,242.8],[471.8,242.8],[468.2,242.4],[466.9,240.4],[466.2,238.7]],[[776.5,230.2],[772.9,231.0],[770.5,232.9],[773.6,235.3],[773.7,237.6],[775.3,239.8],[776.6,242.7],[773.8,245.6],[774.3,243.4],[773.6,240.9],[771.6,238.3],[771.1,236.4],[764.9,237.0],[761.6,236.5],[762.6,234.7],[759.8,231.5],[756.6,229.5],[757.4,227.3],[759.2,224.1],[762.6,223.2],[764.3,221.1],[767.8,219.0],[770.4,217.4],[774.1,218.6],[774.1,221.2],[771.5,222.6],[774.1,224.2],[776.5,225.9],[777.7,227.8],[781.1,228.3],[778.1,229.9],[776.5,230.2]],[[555.0,192.1],[551.2,192.1],[553.4,190.0],[556.5,191.3],[555.0,192.1]],[[743.8,177.9],[752.0,175.6],[756.2,174.5],[761.5,175.3],[766.2,176.4],[770.2,177.0],[771.7,174.1],[774.6,171.7],[780.2,172.9],[783.5,173.5],[788.0,176.2],[794.1,175.4],[799.6,176.8],[803.9,177.9],[807.4,178.3],[813.6,177.4],[817.7,175.8],[820.8,176.8],[820.8,180.5],[825.8,181.4],[830.2,181.3],[832.4,183.5],[826.2,183.6],[822.2,185.6],[817.9,186.4],[812.3,187.0],[809.3,188.2],[806.7,191.3],[803.5,192.0],[799.3,192.1],[794.8,192.8],[791.6,193.8],[787.0,193.2],[782.9,192.0],[776.4,192.0],[770.7,191.6],[766.0,190.4],[763.0,188.4],[759.7,187.1],[755.9,186.8],[752.6,186.5],[752.7,183.1],[746.8,180.6],[743.8,177.9]],[[596.0,276.8],[601.4,277.0],[605.1,276.4],[609.8,275.8],[612.3,277.1],[612.8,280.7],[612.4,282.5],[609.6,284.5],[603.9,285.8],[600.8,287.4],[597.8,288.8],[597.7,291.4],[598.7,294.3],[597.3,296.5],[591.7,297.9],[591.2,300.1],[588.4,298.7],[588.7,296.3],[586.6,293.0],[589.6,291.2],[591.0,289.1],[591.2,286.4],[591.2,284.5],[587.9,283.5],[584.3,283.2],[592.3,280.4],[595.7,281.3],[595.5,283.7],[599.4,283.3],[599.1,281.3],[597.0,279.8],[595.2,277.9],[596.0,276.8]],[[466.2,238.7],[462.7,236.5],[459.5,235.7],[455.2,235.9],[455.1,233.4],[454.5,231.1],[452.6,229.0],[464.1,228.5],[463.6,226.2],[466.8,225.3],[466.8,221.2],[475.9,221.3],[475.9,218.8],[486.3,222.7],[482.1,222.8],[483.4,229.5],[484.8,236.1],[473.5,237.4],[468.5,237.5],[466.2,238.7]],[[596.0,276.8],[596.0,279.8],[599.1,281.3],[599.4,283.3],[595.5,283.7],[595.7,281.3],[592.3,280.4],[591.6,278.6],[592.5,275.7],[591.0,273.4],[594.3,274.1],[596.0,276.8]],[[780.8,251.0],[784.4,251.1],[787.2,253.0],[787.3,255.1],[789.6,257.6],[784.9,257.2],[781.6,256.0],[779.7,254.3],[778.3,252.3],[778.5,250.4],[780.8,251.0]],[[829.5,253.5],[825.0,253.8],[820.9,255.4],[818.4,257.9],[813.5,257.8],[810.5,258.7],[807.0,258.9],[804.6,257.1],[808.8,257.3],[810.5,255.8],[813.9,255.5],[817.2,253.5],[820.6,252.8],[822.8,251.1],[825.4,250.0],[828.7,251.7],[829.5,253.5]],[[545.4,303.1],[542.3,300.7],[541.0,297.9],[540.0,295.5],[539.6,292.8],[537.1,290.8],[535.6,289.0],[532.8,286.5],[535.6,284.8],[539.1,285.6],[550.7,285.4],[559.4,286.3],[564.5,285.7],[568.6,285.5],[565.5,286.9],[560.2,286.8],[558.0,292.3],[555.3,296.9],[555.3,302.9],[551.3,303.9],[547.8,302.7],[545.4,303.1]],[[960.5,291.2],[964.2,292.8],[959.7,292.1],[956.0,290.2],[959.6,290.7],[960.5,291.2]],[[506.0,242.6],[502.8,241.3],[501.2,239.6],[503.8,237.6],[507.6,237.5],[510.3,236.3],[511.9,231.8],[515.8,231.1],[523.8,228.1],[533.3,225.1],[537.7,225.8],[541.3,226.1],[541.9,228.5],[544.2,229.9],[542.5,233.7],[542.4,235.6],[538.8,237.1],[537.6,239.0],[540.5,240.6],[537.0,240.2],[532.0,240.6],[528.1,240.6],[521.7,240.5],[517.9,240.3],[512.1,239.9],[510.2,241.7],[506.9,242.2],[506.0,242.6]],[[523.6,253.1],[519.7,253.5],[516.4,253.8],[514.0,251.9],[509.9,250.9],[507.6,248.6],[508.1,246.7],[510.3,245.4],[509.9,243.5],[510.2,241.7],[512.1,239.9],[517.9,240.3],[521.7,240.5],[525.0,241.3],[529.7,240.7],[534.2,241.0],[538.9,241.9],[537.7,244.3],[536.6,246.0],[533.9,248.0],[532.6,249.9],[529.2,249.8],[525.6,250.7],[523.6,253.1]],[[261.9,243.9],[259.0,242.3],[256.8,241.0],[259.7,239.9],[263.4,239.0],[266.7,238.5],[268.0,240.2],[267.7,242.1],[267.2,243.9],[262.3,243.7],[261.9,243.9]],[[516.9,168.2],[519.0,171.2],[517.1,174.5],[513.8,173.0],[509.2,173.3],[513.1,169.2],[516.9,168.2]],[[578.2,111.2],[586.9,114.4],[583.3,115.6],[586.4,118.2],[581.7,119.9],[577.0,115.7],[572.7,117.1],[568.7,121.9],[562.1,121.1],[559.0,119.0],[555.6,120.2],[550.0,122.2],[546.6,124.4],[542.0,131.2],[537.7,136.1],[534.9,138.5],[533.3,145.7],[534.2,150.7],[530.6,154.3],[523.3,155.8],[519.6,156.4],[515.7,155.0],[513.9,145.1],[523.8,140.5],[529.2,137.1],[534.3,132.3],[541.0,125.2],[545.7,122.2],[553.3,117.1],[559.4,115.3],[564.0,115.5],[568.2,111.9],[573.3,112.1],[578.2,111.2]],[[568.7,74.6],[562.5,77.3],[557.6,75.8],[563.6,70.3],[568.7,74.6]],[[550.7,60.8],[559.8,66.6],[552.9,69.6],[548.9,76.0],[544.2,81.7],[538.2,77.8],[531.2,67.3],[536.6,58.3],[542.1,61.0],[547.2,58.0],[550.7,60.8]],[[570.7,54.9],[576.1,57.9],[572.0,62.3],[564.0,63.2],[555.8,61.9],[551.3,59.5],[556.8,53.2],[560.9,55.3],[570.7,54.9]],[[744.8,218.0],[744.6,220.4],[739.0,220.1],[735.2,219.1],[731.4,218.9],[727.8,218.0],[722.5,216.5],[725.3,214.2],[728.7,214.3],[731.5,215.4],[736.1,216.8],[741.5,217.9],[744.8,218.0]],[[980.6,324.9],[984.0,325.7],[981.2,328.9],[978.6,330.6],[975.5,332.7],[971.8,335.7],[967.8,336.3],[963.0,335.5],[967.5,331.2],[971.3,330.0],[975.3,328.0],[977.6,326.0],[980.0,324.1],[980.6,324.9]],[[985.0,316.1],[987.0,318.0],[991.0,319.2],[994.5,318.7],[994.4,321.6],[991.3,323.3],[988.9,325.6],[985.1,325.6],[985.8,323.0],[982.9,321.5],[985.4,319.5],[984.1,317.1],[980.7,314.4],[984.2,314.5],[985.0,316.1]],[[663.5,228.8],[660.6,230.1],[660.3,232.1],[657.0,233.4],[653.5,234.1],[648.8,235.5],[644.4,232.0],[652.8,230.5],[654.6,227.4],[654.2,225.0],[655.2,222.8],[659.5,224.5],[663.1,225.0],[666.1,226.6],[664.7,228.3],[663.5,228.8]],[[708.8,202.2],[711.6,204.4],[716.2,205.1],[713.5,206.6],[706.2,206.4],[705.8,208.7],[709.1,210.7],[706.7,212.9],[704.0,214.6],[699.4,218.0],[693.1,219.6],[695.2,221.5],[697.3,223.7],[691.2,223.7],[687.3,224.4],[684.4,222.0],[679.3,222.3],[674.7,222.3],[670.8,222.6],[671.9,220.7],[675.9,219.9],[674.2,217.4],[670.5,215.7],[676.5,215.4],[680.7,215.4],[684.3,214.7],[685.9,212.3],[690.4,211.7],[693.6,209.3],[696.9,207.7],[698.9,205.7],[699.6,203.3],[705.7,202.7],[708.8,202.2]],[[283.7,249.5],[282.1,247.8],[279.0,247.0],[276.4,248.3],[273.0,248.2],[269.5,248.1],[269.6,246.2],[272.8,247.0],[276.3,246.8],[280.5,246.1],[284.1,247.0],[284.9,248.9],[283.7,249.5]],[[306.7,285.8],[301.7,286.1],[296.0,284.0],[291.0,282.3],[287.7,280.2],[285.8,277.8],[283.1,275.1],[280.5,272.2],[278.4,270.4],[274.3,268.9],[273.9,266.8],[276.9,264.9],[278.8,266.4],[282.1,265.6],[287.1,263.8],[290.2,262.3],[290.6,260.2],[294.1,261.4],[297.0,263.3],[300.6,263.1],[305.4,263.9],[303.6,265.4],[300.7,266.6],[297.5,267.6],[296.9,269.6],[294.5,270.9],[297.2,273.1],[299.5,274.6],[304.2,273.8],[304.0,276.0],[309.3,278.3],[308.5,281.1],[307.3,282.9],[306.7,285.8]],[[851.0,247.8],[851.5,249.6],[848.2,250.2],[848.3,251.9],[845.1,251.1],[843.4,248.6],[839.1,250.0],[841.5,247.9],[846.1,247.7],[848.4,245.8],[850.9,247.3],[851.0,247.8]],[[844.4,245.1],[841.7,246.9],[841.2,245.1],[844.7,243.7],[844.4,245.1]],[[829.2,246.5],[825.5,247.9],[828.9,245.9],[832.0,243.5],[830.6,245.5],[829.2,246.5]],[[838.6,242.7],[842.0,243.2],[838.9,244.8],[838.6,242.7]],[[848.6,242.3],[847.3,244.0],[845.2,241.7],[848.6,242.3]],[[837.6,241.0],[834.2,240.4],[837.6,241.0]],[[837.0,232.8],[840.3,234.9],[838.0,236.7],[838.1,239.1],[844.3,239.9],[844.7,241.7],[841.5,240.2],[836.5,240.1],[835.3,238.4],[833.0,236.0],[834.4,234.2],[837.0,232.8]],[[933.0,269.9],[929.8,268.5],[933.4,269.5],[933.0,269.9]],[[922.2,267.9],[918.8,268.8],[913.6,268.7],[916.7,267.3],[921.2,266.9],[922.2,267.9]],[[908.9,270.7],[913.2,273.2],[916.8,274.1],[913.7,274.9],[908.7,273.8],[905.7,271.7],[902.1,271.1],[898.0,272.0],[896.2,273.5],[891.8,273.2],[891.7,268.5],[891.7,263.8],[896.5,264.8],[901.6,265.6],[905.1,267.1],[910.1,268.8],[908.9,270.7]],[[925.4,266.5],[922.1,265.0],[918.5,264.0],[922.9,264.7],[925.4,266.5]],[[541.7,173.8],[540.1,170.3],[541.1,166.8],[545.5,165.7],[549.0,164.8],[554.6,165.9],[558.0,166.2],[563.1,166.2],[566.1,169.2],[565.4,172.7],[566.5,175.4],[562.6,177.5],[558.0,177.9],[553.7,177.3],[549.0,176.2],[544.9,175.4],[541.7,173.8]],[[862.9,192.3],[860.2,193.8],[858.4,195.9],[854.3,197.3],[856.5,199.5],[853.0,200.1],[849.1,200.7],[848.3,198.0],[845.2,197.0],[850.5,194.8],[853.7,194.0],[860.0,192.2],[862.9,192.3]],[[474.9,193.3],[479.4,193.4],[480.9,196.2],[480.3,198.7],[480.1,200.9],[476.7,202.4],[475.4,200.1],[473.8,198.0],[475.6,195.4],[474.9,193.3]],[[325.9,293.0],[327.0,291.1],[328.4,288.9],[333.2,288.5],[338.4,289.3],[339.1,292.7],[343.1,292.7],[345.8,295.1],[349.2,295.8],[348.3,298.5],[345.3,301.2],[340.0,301.2],[339.9,298.3],[336.6,297.0],[333.3,295.8],[325.9,293.0]],[[641.1,223.1],[641.7,221.1],[642.7,223.3],[641.1,223.1]],[[563.1,181.0],[567.8,180.8],[572.1,180.8],[575.6,181.1],[578.1,183.3],[578.4,186.1],[582.2,186.5],[579.3,189.7],[575.7,188.7],[571.0,189.7],[566.9,189.6],[562.9,188.6],[559.9,187.5],[557.7,185.5],[560.1,182.9],[563.1,181.0]],[[899.0,174.7],[901.8,178.6],[897.7,177.9],[896.0,181.1],[898.7,183.2],[894.7,185.1],[894.5,181.2],[894.8,177.2],[894.9,174.2],[893.6,168.7],[896.3,166.1],[897.9,170.0],[899.0,174.7]],[[563.1,166.2],[558.0,166.2],[554.6,165.9],[559.1,164.0],[563.2,164.8],[563.1,166.2]],[[13.8,129.7],[22.6,128.5],[28.1,131.9],[20.7,133.8],[19.6,137.8],[14.9,136.6],[11.2,135.6],[7.7,133.5],[3.0,132.8],[0.0,135.4],[0.0,120.6],[6.8,123.7],[14.1,127.5],[13.8,129.7]],[[1000.0,112.8],[996.5,111.6],[1000.0,109.7],[1000.0,112.8]],[[3.6,112.5],[0.0,112.8],[2.7,109.5],[6.7,110.8],[3.6,112.5]],[[898.9,101.6],[894.7,101.7],[889.0,101.1],[894.6,98.3],[898.6,100.3],[898.9,101.6]],[[918.7,91.7],[915.5,93.9],[911.0,93.4],[905.9,91.2],[911.7,90.2],[918.7,91.7]],[[903.0,89.0],[890.6,93.0],[886.0,94.3],[880.5,90.7],[885.6,85.6],[893.0,85.9],[903.0,89.0]],[[659.8,113.3],[649.1,113.1],[643.3,109.9],[645.7,103.8],[651.2,99.5],[655.3,94.2],[660.7,88.7],[669.9,84.9],[679.2,83.8],[683.9,81.4],[689.3,80.6],[679.5,88.0],[671.1,90.7],[662.4,96.0],[658.3,101.0],[653.9,105.7],[659.8,113.3]],[[797.1,80.4],[800.4,82.0],[808.5,82.1],[814.8,85.1],[813.3,92.0],[806.0,95.1],[811.4,98.7],[815.4,101.0],[821.0,98.9],[829.9,99.7],[842.2,102.8],[848.3,99.9],[852.7,99.8],[857.2,102.5],[860.3,111.2],[864.7,113.0],[867.4,108.3],[871.8,110.3],[876.6,109.1],[881.9,110.5],[888.5,109.9],[890.2,103.4],[915.3,106.6],[924.9,112.7],[936.1,111.9],[941.7,112.6],[943.6,117.5],[947.1,118.7],[950.8,117.9],[955.7,117.8],[960.9,118.6],[966.2,118.1],[971.0,121.7],[974.5,120.4],[982.3,117.1],[988.1,116.9],[996.1,118.9],[1000.0,120.6],[1000.0,135.4],[996.4,136.9],[992.8,136.7],[997.0,141.1],[992.7,143.4],[984.9,145.8],[978.2,148.2],[974.2,150.0],[969.2,149.3],[961.9,151.6],[958.0,151.8],[954.3,151.4],[950.0,156.0],[953.3,157.7],[952.9,161.5],[949.2,163.8],[945.5,166.1],[940.4,169.5],[935.5,174.1],[933.3,169.0],[931.8,163.5],[933.1,159.9],[935.6,157.1],[939.9,156.5],[944.9,153.0],[949.6,150.0],[954.6,147.7],[956.9,143.3],[953.5,143.6],[944.8,149.4],[942.5,145.7],[935.3,146.8],[928.4,151.7],[924.5,154.2],[920.2,154.5],[916.1,152.0],[912.6,153.4],[904.1,152.9],[895.0,153.7],[886.0,159.1],[875.4,165.2],[879.7,165.5],[883.8,167.6],[888.6,166.5],[892.6,169.2],[890.5,173.5],[889.1,179.8],[884.9,182.9],[880.2,186.8],[876.4,189.1],[870.9,191.4],[867.4,190.5],[863.7,192.0],[864.7,188.9],[866.3,186.4],[869.7,186.8],[872.5,182.4],[875.1,179.7],[870.5,180.4],[863.9,181.2],[859.4,177.6],[854.6,176.9],[852.6,173.3],[849.9,169.9],[843.3,168.3],[839.6,168.3],[836.1,168.8],[835.4,171.8],[831.3,175.0],[827.4,177.4],[824.1,176.6],[819.3,176.0],[813.6,177.4],[809.9,177.7],[803.9,177.9],[799.6,176.8],[794.1,175.4],[790.6,175.7],[784.0,175.2],[780.2,172.9],[774.6,171.7],[771.7,174.1],[770.2,177.0],[766.2,176.4],[761.5,175.3],[756.2,174.5],[752.0,175.6],[746.7,177.5],[742.7,178.1],[737.6,177.0],[734.5,175.7],[731.6,173.9],[727.6,174.5],[723.8,173.2],[716.1,168.4],[712.6,166.5],[706.6,168.1],[700.6,166.0],[696.8,164.0],[691.9,163.5],[682.4,165.5],[670.7,166.9],[668.7,170.1],[671.1,173.5],[666.5,174.4],[662.1,173.9],[657.7,174.0],[651.5,174.0],[645.4,172.4],[641.0,172.5],[635.3,175.0],[629.9,177.8],[631.4,181.4],[635.3,182.7],[635.1,185.4],[629.7,187.9],[632.2,189.8],[635.0,193.4],[631.6,194.5],[627.2,192.9],[623.7,191.6],[617.8,190.6],[613.7,190.3],[607.4,188.5],[604.3,187.8],[606.2,184.5],[608.7,182.8],[610.8,180.3],[611.3,177.2],[607.2,176.5],[603.9,175.5],[598.2,175.1],[595.1,173.5],[590.9,171.2],[587.6,170.0],[590.8,168.5],[587.2,166.6],[585.8,163.1],[581.6,162.8],[578.3,161.5],[575.8,158.0],[576.2,154.6],[580.9,150.9],[583.9,145.7],[587.5,142.3],[583.4,140.1],[582.1,135.5],[580.7,128.4],[579.0,123.0],[581.7,119.9],[586.4,118.2],[593.8,119.3],[601.4,120.2],[611.9,124.7],[614.2,129.0],[611.2,130.9],[606.6,131.8],[594.2,129.1],[596.7,132.2],[597.1,137.3],[600.6,138.3],[603.3,134.8],[610.0,136.9],[616.9,130.1],[622.1,131.6],[621.4,126.9],[620.7,122.2],[628.5,123.5],[626.6,128.2],[633.0,128.6],[639.5,124.4],[649.2,121.1],[652.0,124.1],[659.2,122.6],[663.3,121.0],[666.5,123.4],[669.7,120.7],[676.4,118.3],[680.2,119.5],[690.3,124.1],[689.3,119.1],[685.9,118.6],[685.3,113.3],[690.4,107.8],[694.3,102.5],[701.6,103.8],[699.6,110.2],[702.2,114.7],[701.6,120.4],[704.6,122.9],[698.0,130.7],[702.3,129.9],[706.1,127.2],[708.2,120.5],[704.4,117.9],[706.7,113.7],[703.1,110.0],[708.0,106.9],[712.1,111.4],[715.5,106.2],[721.3,106.0],[726.4,108.7],[723.9,104.7],[728.5,98.4],[735.2,98.6],[741.2,97.9],[742.1,91.5],[750.7,88.5],[758.1,87.8],[766.3,85.6],[774.8,83.7],[779.9,83.8],[783.3,78.4],[789.9,75.6],[794.6,77.8],[790.8,79.4],[797.1,80.4]],[[791.9,71.4],[776.2,74.1],[781.3,64.5],[785.7,64.2],[792.7,68.4],[791.9,71.4]],[[642.0,53.7],[638.3,54.8],[632.2,58.3],[624.6,53.3],[630.0,51.7],[634.2,51.6],[639.0,50.4],[643.1,52.3],[642.0,53.7]],[[777.6,67.2],[771.5,68.1],[763.8,66.0],[759.2,63.0],[753.3,55.5],[760.5,49.4],[766.5,47.3],[771.9,51.9],[778.3,60.2],[777.6,67.2]],[[584.5,261.6],[585.4,263.3],[582.3,264.2],[581.4,262.3],[584.5,261.6]],[[475.6,219.3],[475.9,221.3],[466.8,221.2],[466.8,225.3],[463.6,226.2],[464.1,228.5],[453.2,228.4],[459.0,228.2],[461.4,224.8],[465.3,223.1],[466.6,221.0],[470.7,219.5],[475.6,219.3]],[[618.8,236.1],[617.4,234.4],[614.5,232.5],[611.8,230.2],[608.7,228.5],[608.5,226.5],[606.9,224.8],[603.2,222.9],[600.7,220.2],[597.6,217.7],[597.1,215.6],[601.4,215.4],[604.6,214.0],[602.8,212.0],[608.3,211.2],[612.2,211.4],[616.4,212.5],[624.2,215.9],[629.4,216.0],[632.5,217.0],[635.6,218.3],[639.3,220.0],[640.4,222.2],[643.3,223.9],[644.4,225.8],[652.8,226.6],[652.8,230.5],[644.4,232.0],[636.4,232.6],[631.9,234.9],[626.1,234.6],[622.4,234.5],[618.8,236.1]],[[594.3,246.3],[592.2,244.4],[592.2,242.3],[590.0,243.9],[587.1,245.8],[583.3,245.1],[580.6,246.1],[575.3,246.0],[572.1,245.3],[568.9,245.8],[567.2,247.3],[565.4,245.4],[563.5,243.8],[561.9,241.6],[562.5,239.4],[564.0,237.1],[566.2,231.1],[569.4,230.5],[569.4,227.4],[580.6,227.4],[591.4,227.4],[602.4,227.4],[603.1,230.8],[604.1,232.6],[605.3,234.4],[602.1,236.1],[600.9,238.3],[600.8,240.2],[597.9,242.4],[596.5,244.1],[594.3,246.1],[594.3,246.3]],[[594.3,246.3],[592.5,247.9],[594.7,249.5],[598.1,252.0],[594.5,253.9],[590.8,254.5],[586.8,254.5],[583.2,254.0],[579.7,253.6],[576.0,252.4],[572.8,250.5],[569.8,249.1],[566.4,247.5],[568.9,245.8],[572.1,245.3],[575.3,246.0],[580.5,246.4],[583.3,245.1],[587.1,245.8],[590.0,243.9],[591.0,242.2],[592.2,244.4],[594.0,246.2],[594.3,246.3]],[[453.6,240.2],[451.0,238.5],[453.6,237.2],[456.6,236.0],[460.8,236.1],[464.4,237.6],[466.3,239.6],[468.1,241.4],[463.3,241.7],[456.8,241.6],[453.2,240.8],[456.9,240.6],[460.3,240.6],[457.2,239.8],[453.6,240.2]],[[946.8,274.3],[943.4,274.0],[946.8,274.3]],[[949.1,273.9],[946.1,272.1],[949.1,273.9]],[[944.1,272.1],[940.5,271.2],[944.1,272.1]],[[937.6,270.6],[934.8,269.6],[937.6,270.6]],[[468.2,250.2],[464.0,248.7],[464.7,246.4],[469.1,245.4],[470.8,247.4],[469.0,249.3],[468.2,250.2]],[[256.1,240.5],[252.1,240.4],[255.4,239.6],[256.1,240.5]],[[635.9,246.3],[632.7,248.4],[621.3,246.7],[618.2,244.6],[622.5,244.8],[626.5,244.5],[632.0,243.8],[636.0,243.4],[635.9,245.5],[635.9,246.3]],[[638.1,243.2],[642.0,242.5],[641.8,244.5],[640.4,246.7],[639.1,248.3],[637.4,250.1],[635.0,252.3],[632.6,253.9],[629.3,255.9],[626.6,257.0],[622.4,258.5],[619.8,259.6],[616.8,261.3],[613.8,256.0],[616.3,254.3],[621.3,252.8],[624.9,252.8],[632.7,248.4],[635.9,246.3],[635.9,244.0],[638.1,243.2]],[[558.0,186.2],[561.5,188.1],[563.9,190.7],[560.9,192.4],[558.2,190.8],[554.5,190.7],[553.1,188.2],[552.3,185.2],[556.2,184.7],[558.0,186.2]],[[341.3,251.4],[344.6,251.6],[350.1,251.7],[348.9,253.9],[349.3,256.1],[345.6,256.5],[341.2,256.0],[338.8,254.1],[340.8,252.7],[341.3,251.4]],[[552.4,177.5],[556.7,177.6],[562.7,178.4],[557.8,179.4],[553.3,180.5],[549.6,181.3],[546.9,179.7],[550.3,178.5],[552.4,177.5]],[[538.4,183.9],[542.0,183.6],[545.5,183.2],[543.5,185.3],[540.0,186.1],[538.4,183.9]],[[561.6,132.8],[559.4,137.3],[554.9,140.0],[549.6,142.7],[547.6,147.1],[552.2,150.8],[549.6,154.0],[545.7,159.2],[540.7,161.4],[536.0,163.6],[532.7,158.1],[530.6,154.3],[534.2,150.7],[535.1,147.2],[533.1,141.5],[537.7,138.5],[542.0,131.2],[544.7,127.1],[549.2,124.4],[555.2,122.9],[561.1,122.0],[565.4,124.7],[565.5,130.4],[561.6,132.8]],[[589.1,300.1],[585.2,300.1],[587.0,298.4],[589.1,300.1]],[[607.8,208.8],[602.3,210.6],[599.2,209.9],[601.7,207.4],[599.7,205.2],[602.1,202.7],[606.0,202.6],[609.8,202.9],[613.0,202.2],[617.6,202.0],[614.7,203.6],[613.9,207.0],[607.8,208.8]],[[540.3,241.3],[538.8,239.6],[538.8,237.1],[542.4,235.6],[542.5,233.7],[543.6,230.6],[541.9,228.5],[541.3,226.1],[555.1,228.2],[566.2,231.1],[566.4,237.2],[562.7,238.2],[561.6,239.9],[560.9,241.7],[563.5,243.4],[560.3,244.6],[558.3,246.2],[553.0,246.8],[549.9,248.6],[546.4,249.1],[542.4,249.2],[541.6,247.2],[538.8,246.1],[543.0,245.5],[541.6,243.2],[540.3,241.3]],[[505.2,251.1],[501.6,250.0],[502.0,248.0],[501.0,246.3],[499.9,244.4],[503.0,245.2],[504.6,246.8],[504.5,250.1],[505.2,251.1]],[[785.0,242.3],[780.1,241.6],[776.3,244.2],[775.6,246.6],[778.6,248.0],[780.6,250.1],[783.7,251.0],[778.5,250.4],[775.0,248.5],[772.9,247.0],[775.1,244.1],[775.5,241.3],[773.4,238.6],[774.7,236.3],[771.8,234.2],[772.9,231.0],[776.5,230.2],[779.5,231.3],[780.7,234.3],[783.6,233.4],[788.8,233.2],[791.1,235.9],[793.2,238.5],[789.7,239.0],[786.1,239.2],[785.0,242.3]],[[697.3,196.4],[693.2,196.7],[699.4,198.2],[704.7,197.9],[708.0,199.9],[705.4,201.6],[701.8,202.3],[698.7,200.8],[695.2,201.1],[692.2,202.1],[688.4,202.1],[689.4,198.9],[691.7,196.7],[696.3,195.0],[697.3,196.4]],[[670.0,204.8],[667.7,203.3],[664.5,201.7],[659.3,200.5],[654.2,200.6],[649.8,202.0],[649.7,198.8],[646.4,196.8],[649.6,195.7],[649.2,192.8],[646.7,194.7],[650.2,192.4],[654.0,194.5],[658.6,194.3],[662.9,191.6],[666.6,192.6],[671.0,194.5],[673.3,196.8],[676.4,198.1],[681.2,199.8],[684.9,200.6],[679.9,202.2],[677.7,204.2],[672.9,205.5],[670.0,204.8]],[[847.1,272.9],[851.8,272.2],[847.5,273.6],[847.1,272.9]],[[526.3,214.0],[525.2,211.0],[521.1,208.9],[522.6,206.6],[522.8,203.4],[526.4,201.8],[530.6,202.2],[529.4,204.3],[528.2,207.1],[530.9,208.9],[530.4,211.0],[527.6,212.2],[526.3,214.0]],[[602.5,194.3],[606.5,195.1],[612.1,194.9],[615.4,193.9],[621.1,194.8],[623.3,196.9],[623.4,200.1],[623.0,202.4],[618.8,201.7],[614.5,202.3],[609.8,202.9],[606.0,202.6],[602.1,202.7],[598.8,203.2],[594.5,203.8],[590.3,204.0],[585.1,203.0],[579.8,203.0],[575.1,201.2],[574.5,198.8],[575.8,196.1],[580.1,196.0],[586.5,194.8],[589.9,193.5],[597.7,193.0],[602.5,194.3]],[[575.5,195.6],[572.5,193.4],[577.8,193.0],[580.5,194.4],[576.7,195.0],[575.5,195.6]],[[838.3,223.6],[836.6,226.2],[833.6,225.0],[837.5,222.2],[838.3,223.6]],[[594.2,261.4],[604.7,264.5],[608.9,266.8],[607.6,268.6],[609.6,270.3],[608.9,272.3],[611.0,274.7],[606.7,276.4],[602.2,276.9],[598.1,276.6],[595.2,274.8],[591.0,273.4],[587.7,272.7],[583.9,270.3],[581.7,268.6],[581.5,266.5],[584.7,265.2],[585.4,263.3],[584.5,261.6],[588.5,261.5],[594.2,261.4]],[[588.5,261.5],[584.5,261.6],[583.0,259.1],[585.7,257.3],[585.6,254.9],[590.8,254.5],[594.5,253.9],[596.1,255.6],[597.3,257.2],[594.9,259.3],[594.2,261.4],[588.5,261.5]],[[588.3,171.5],[593.8,171.0],[597.3,173.6],[601.7,175.8],[605.6,176.5],[611.3,177.2],[610.8,180.3],[606.3,181.7],[602.1,183.5],[597.1,184.4],[601.5,186.1],[597.9,187.2],[594.1,188.4],[590.2,186.4],[593.3,185.3],[588.2,184.3],[584.4,184.9],[581.0,186.1],[583.4,184.1],[580.7,181.8],[576.5,179.7],[572.8,180.3],[569.1,181.3],[564.3,180.6],[562.6,177.5],[565.1,175.7],[565.4,172.7],[570.4,172.0],[576.3,172.7],[580.5,172.7],[584.9,173.3],[588.3,171.5]],[[339.9,305.8],[344.5,306.9],[348.4,308.0],[352.2,310.1],[350.5,313.0],[347.4,313.9],[343.8,313.8],[339.4,313.1],[337.9,311.0],[338.5,308.9],[339.9,305.8]],[[67.9,231.9],[67.1,230.1],[70.0,231.3],[67.9,231.9]],[[236.6,177.7],[239.9,179.4],[245.4,180.5],[251.1,180.7],[254.5,180.1],[259.8,181.7],[264.2,183.1],[267.0,184.8],[270.7,186.3],[271.8,189.9],[269.7,192.2],[274.2,192.6],[280.7,191.3],[284.1,189.8],[287.5,189.0],[290.8,187.4],[296.3,187.0],[301.4,187.0],[304.7,185.2],[307.7,181.9],[311.7,182.8],[311.7,185.6],[314.0,187.4],[308.2,189.1],[303.8,190.9],[304.2,193.4],[300.4,194.3],[295.2,195.1],[299.3,194.7],[296.3,195.7],[293.9,197.4],[290.2,197.8],[290.6,200.6],[287.9,198.5],[288.1,200.7],[289.3,203.2],[287.9,206.3],[283.2,207.9],[280.0,209.2],[276.9,210.3],[274.1,212.1],[274.1,214.5],[276.3,217.1],[277.6,219.7],[276.7,222.4],[273.0,221.3],[270.3,218.7],[269.6,216.0],[266.4,214.4],[263.1,215.1],[260.0,213.9],[254.4,213.9],[251.6,215.4],[247.6,216.0],[243.1,215.3],[239.3,215.0],[234.4,216.6],[230.2,218.1],[229.6,220.7],[224.9,220.5],[223.6,218.6],[221.0,216.7],[217.6,214.9],[213.6,216.2],[209.8,215.3],[208.2,213.5],[205.2,212.2],[199.3,211.6],[191.6,212.3],[185.3,211.1],[181.1,210.3],[174.6,210.3],[172.4,208.4],[169.2,207.6],[165.6,206.9],[161.9,203.9],[159.6,201.4],[156.3,198.8],[154.4,196.3],[155.0,193.0],[155.2,189.7],[155.8,186.0],[155.3,183.2],[153.6,180.4],[158.0,180.7],[166.7,178.6],[174.9,178.6],[186.1,178.6],[194.3,178.6],[202.6,178.6],[211.0,178.6],[220.4,178.6],[229.9,178.6],[235.7,178.6],[236.6,177.7]],[[75.0,159.0],[70.8,159.3],[74.4,156.7],[75.0,159.0]],[[40.1,151.3],[36.5,151.2],[39.8,150.2],[40.1,151.3]],[[23.0,139.4],[26.4,139.7],[31.4,141.0],[27.0,141.3],[23.5,140.9],[23.0,139.4]],[[69.3,111.4],[77.2,112.8],[81.3,114.5],[90.0,115.5],[95.3,115.9],[101.1,115.7],[105.4,117.0],[108.4,131.8],[108.3,150.1],[113.8,151.0],[118.2,154.1],[123.7,151.6],[127.0,154.2],[131.3,157.5],[134.1,160.5],[138.9,162.1],[137.4,165.0],[133.4,163.2],[129.1,158.8],[124.9,156.1],[120.5,156.0],[117.2,155.2],[111.5,152.3],[104.0,150.8],[100.1,151.0],[94.7,149.7],[91.3,148.4],[88.8,151.1],[84.1,151.9],[78.6,153.4],[79.4,148.9],[76.2,150.8],[72.2,152.9],[71.6,156.2],[65.8,158.2],[60.8,160.7],[56.7,163.0],[52.2,163.6],[47.0,165.3],[42.3,166.0],[47.6,163.6],[54.0,161.9],[59.2,159.3],[62.4,155.7],[58.2,155.5],[54.6,153.7],[50.1,154.8],[48.6,151.0],[44.9,151.6],[40.7,149.5],[38.6,146.6],[41.9,143.1],[45.1,141.2],[49.3,140.2],[53.4,139.4],[48.7,136.8],[41.8,137.2],[37.7,136.4],[33.0,133.0],[36.9,131.5],[43.1,129.8],[50.9,131.4],[45.2,127.8],[40.6,124.3],[36.8,123.0],[43.2,120.8],[46.8,119.0],[50.3,115.0],[58.2,112.5],[65.1,110.4],[69.3,111.4]],[[684.8,201.7],[681.2,199.8],[676.4,198.1],[673.3,196.8],[671.0,194.5],[666.9,194.1],[662.9,191.6],[658.1,193.4],[655.4,187.1],[662.5,185.9],[667.3,187.5],[672.3,190.1],[680.3,189.6],[683.6,191.1],[685.3,194.6],[688.8,194.7],[695.5,192.9],[697.7,194.7],[702.9,195.2],[699.4,196.6],[695.7,195.9],[691.7,196.7],[688.1,197.6],[690.0,200.3],[686.3,201.8],[684.8,201.7]],[[301.9,242.9],[301.0,244.8],[300.8,246.8],[301.7,244.1],[305.1,243.5],[308.7,243.4],[313.1,244.7],[317.6,245.2],[321.3,244.9],[324.8,244.5],[328.9,245.7],[331.5,247.6],[332.5,249.8],[329.4,251.4],[331.7,252.9],[327.5,254.0],[322.5,254.2],[321.5,256.4],[320.5,258.1],[315.8,259.0],[313.4,256.7],[313.0,254.9],[311.8,252.4],[308.4,251.0],[305.3,249.9],[300.1,249.9],[298.8,247.8],[297.1,245.9],[299.4,243.9],[301.9,242.9]],[[800.1,228.1],[796.4,229.4],[794.1,230.9],[795.6,233.6],[798.2,235.5],[802.4,237.7],[803.7,240.4],[803.3,243.0],[797.8,244.9],[792.1,247.5],[791.9,245.6],[795.1,244.1],[798.6,242.0],[798.9,240.3],[798.8,237.8],[796.0,235.7],[791.9,232.5],[788.6,231.6],[790.1,229.3],[786.7,229.3],[783.8,226.7],[787.5,226.3],[792.6,225.3],[796.5,226.2],[800.1,228.1]],[[598.7,210.5],[597.0,212.3],[597.7,210.3],[598.7,210.5]],[[647.5,235.6],[644.9,237.2],[637.7,238.5],[634.0,239.7],[629.8,240.5],[626.1,241.0],[622.7,241.7],[620.1,239.9],[618.3,237.8],[620.1,235.6],[625.6,234.4],[629.9,234.6],[633.8,233.3],[644.4,232.0],[646.6,234.5],[647.5,235.6]],[[587.6,304.2],[585.1,306.2],[580.3,309.1],[576.3,310.9],[572.0,311.7],[568.5,312.3],[563.9,312.1],[559.8,312.7],[555.8,313.7],[552.4,313.1],[550.7,311.0],[550.6,308.3],[547.4,305.3],[545.4,303.1],[549.5,303.6],[555.3,302.9],[555.3,296.9],[557.7,298.7],[560.0,300.1],[562.7,298.9],[565.9,297.9],[569.5,298.5],[572.1,296.8],[575.3,295.1],[581.8,292.7],[585.2,292.8],[588.0,295.2],[588.2,298.1],[585.2,299.6],[588.5,300.8],[590.2,302.7],[587.6,304.2]],[[580.5,303.7],[576.5,304.2],[577.1,306.5],[580.1,305.6],[580.5,303.7]],[[591.0,273.4],[593.0,275.3],[592.5,278.1],[590.8,280.0],[583.8,281.6],[580.4,283.5],[576.7,285.4],[573.3,286.2],[569.7,285.9],[564.5,285.7],[560.8,283.5],[560.9,278.8],[566.7,278.8],[566.7,276.3],[570.6,276.5],[573.8,277.3],[578.2,277.9],[580.4,279.3],[582.3,277.7],[578.8,277.2],[579.6,273.9],[580.6,272.2],[584.3,271.9],[587.7,272.7],[591.0,273.4]],[[586.6,293.0],[582.9,292.7],[577.8,291.8],[575.8,290.1],[572.7,288.4],[570.2,286.0],[574.2,286.4],[579.1,284.1],[582.0,282.9],[586.6,283.2],[589.8,284.0],[591.2,286.4],[590.6,288.6],[589.6,291.2],[586.6,293.0]]];
-const W=1000,H=520;
+
 const GZ=[
   {id:'HKG',name:'Hong Kong',lon:114.1,lat:22.3,r:1.8,risk:'HIGH'},
   {id:'SGP',name:'Malacca Strait',lon:103.8,lat:1.35,r:2.1,risk:'CRITICAL'},
@@ -239,23 +270,67 @@ const LANES=[
   {pts:[[46,-10],[44,-5],[42,2],[40,8],[44,12],[46,18],[50,22],[54,26]]},
 ];
 const CARGO=['Crude Oil','LNG','Container','Bulk Grain','Coal','Chemicals','Ro-Ro','Livestock','Iron Ore','Phosphate'];
-const FLAGS=['Panama','Liberia','Marshall Islands','Bahamas','Singapore','Greece','China','Malta','Cyprus','Hong Kong','Norway','UK','Japan','South Korea'];
-const NAMES=['Pacific Voyager','Atlantic Pioneer','Northern Star','Southern Cross','Eastern Wind','Western Spirit','Golden Bridge','Silver Horizon','Blue Ocean','Red Sea Carrier','Arctic Trader','Tropical Breeze','Desert Storm','Mountain Eagle','River Delta','Coastal Runner','Ocean Guardian','Sea Phoenix','Harbor Light','Deep Water','Trade Wind','Monsoon King','Coral Sea','Midnight Sun','Polar Star','Equator Cross','Tropic Thunder','Gulf Mariner','Bay Spirit','Cape Navigator','Sea Dragon','Orient Express','Titan Carrier','Aegean Star','Baltic Pride','Nordic Wave','Adriatic Sun','Caspian Eagle','Amazon Trader','Congo Spirit','Nile Runner','Euphrates','Tigris Voyager','Mekong Delta','Yangtze Pride','Pearl River','Rhine Carrier','Danube Star','Volga Dream','Mississippi Tide','Colorado Eagle','Grand Canyon','Rocky Mountain','Sierra Madre','Andes Spirit','Himalaya Peak','Atlas Trader','Kilimanjaro','Vesuvius Fire','Etna Spirit','Fuji Maru','Olympus Star','Everest Peak','McKinley Pride','Denali Spirit','Aconcagua','Blanc Summit','Jungfrau Star','Matterhorn'];
-const PFX=['MV','MT','MS','SS'];
+const FLAGS=['Panama','Liberia','Marshall Islands','Bahamas','Singapore','Greece','China','Malta','Cyprus','Hong Kong','Norway','UK','Japan','South Korea','Cayman Islands'];
+const NAMES=['Pacific Voyager','Atlantic Pioneer','Northern Star','Southern Cross','Eastern Wind','Western Spirit','Golden Bridge','Silver Horizon','Blue Ocean','Red Sea Carrier','Arctic Trader','Tropical Breeze','Desert Storm','Mountain Eagle','River Delta','Coastal Runner','Ocean Guardian','Sea Phoenix','Harbor Light','Deep Water','Trade Wind','Monsoon King','Coral Sea','Midnight Sun','Polar Star','Equator Cross','Tropic Thunder','Gulf Mariner','Bay Spirit','Cape Navigator','Sea Dragon','Orient Express','Titan Carrier','Aegean Star','Baltic Pride','Nordic Wave','Adriatic Sun','Caspian Eagle','Amazon Trader','Congo Spirit','Nile Runner','Euphrates','Tigris Voyager','Mekong Delta','Yangtze Pride','Pearl River','Rhine Carrier','Danube Star','Volga Dream','Mississippi Tide'];
+const PFX=['MV','MT','MS','SS','MV','MV'];
+
 const SC={CRITICAL:'#E53E3E',HIGH:'#FF6B35',MEDIUM:'#F0A500',LOW:'#0EA5E9',MINIMAL:'#16A34A'};
 const STC={UNDERWAY:'#16A34A',DARK:'#E53E3E',STS_OPERATION:'#F0A500',ANCHORED:'#0EA5E9',MOORED:'#7BA8CC'};
-const VC=150,UMS=3500,AMS=8000;
-let vessels=[],events=[],selId=null,filt='ALL',aiAnalyzing=false,curAI=null,curTab='map';
-let cvW=0,cvH=0,scaleX=1,scaleY=1;
+const VC=500, UMS=3500, AMS=7000;
 
-function lerp(a,b,t){return a+(b-a)*t;}
-function toXY(lon,lat,cw,ch){
-  const x=((lon+180)/360)*cw;
-  const lr=Math.max(-1.4,Math.min(1.4,lat*Math.PI/180));
+// ── VIEWPORT STATE (zoom/pan) ─────────────────────────────────
+// Base map is W=1000, H=520. We pan/zoom in screen space.
+const BASE_W=1000, BASE_H=520;
+let vpX=0, vpY=0, vpZoom=1;  // offset in map coords
+let cvW=0, cvH=0;
+
+// Convert lon/lat → base map pixel (W=1000, H=520)
+function baseXY(lon,lat){
+  const x=((lon+180)/360)*BASE_W;
+  const lr=Math.max(-1.48,Math.min(1.48,lat*Math.PI/180));
   const mn=Math.log(Math.tan(Math.PI/4+lr/2));
-  const y=ch/2-(mn/(2*Math.PI))*ch;
+  const y=BASE_H/2-(mn/(2*Math.PI))*BASE_H;
   return[x,y];
 }
+
+// Convert base map pixel → screen pixel (applying zoom/pan)
+function mapToScreen(mx,my){
+  return[(mx-vpX)*vpZoom*cvW/BASE_W, (my-vpY)*vpZoom*cvH/BASE_H];
+}
+
+// Convert screen pixel → base map pixel
+function screenToMap(sx,sy){
+  return[sx/(vpZoom*cvW/BASE_W)+vpX, sy/(vpZoom*cvH/BASE_H)+vpY];
+}
+
+// Lon/lat → screen
+function ll2s(lon,lat){const[mx,my]=baseXY(lon,lat);return mapToScreen(mx,my);}
+
+function zoom(factor){
+  // Zoom toward center of canvas
+  const cx=cvW/2, cy=cvH/2;
+  const[mx,my]=screenToMap(cx,cy);
+  vpZoom=Math.max(1,Math.min(20,vpZoom*factor));
+  // Recalculate offset so center stays fixed
+  vpX=mx-cx/(vpZoom*cvW/BASE_W);
+  vpY=my-cy/(vpZoom*cvH/BASE_H);
+  clampView();
+  document.getElementById('mzlvl').textContent=vpZoom.toFixed(1)+'×';
+  document.getElementById('kzoom').textContent=vpZoom.toFixed(1)+'×';
+  draw();
+}
+
+function resetView(){vpX=0;vpY=0;vpZoom=1;document.getElementById('mzlvl').textContent='1.0×';document.getElementById('kzoom').textContent='1.0×';draw();}
+
+function clampView(){
+  const maxX=BASE_W*(1-1/vpZoom);
+  const maxY=BASE_H*(1-1/vpZoom);
+  vpX=Math.max(0,Math.min(maxX,vpX));
+  vpY=Math.max(0,Math.min(maxY,vpY));
+}
+
+// ── VESSEL DATA ───────────────────────────────────────────────
+function lerp(a,b,t){return a+(b-a)*t;}
 function hav(lo1,la1,lo2,la2){
   const R=3440.065,dLa=(la2-la1)*Math.PI/180,dLo=(lo2-lo1)*Math.PI/180;
   const a=Math.sin(dLa/2)**2+Math.cos(la1*Math.PI/180)*Math.cos(la2*Math.PI/180)*Math.sin(dLo/2)**2;
@@ -268,16 +343,20 @@ function initV(id){
   const pi=Math.floor(Math.random()*(lane.pts.length-1));
   const t=Math.random();
   const p1=lane.pts[pi],p2=lane.pts[Math.min(pi+1,lane.pts.length-1)];
-  const lon=Math.max(-178,Math.min(178,lerp(p1[0],p2[0],t)+(Math.random()-.5)*10));
-  const lat=Math.max(-78,Math.min(78,lerp(p1[1],p2[1],t)+(Math.random()-.5)*5));
+  const lon=Math.max(-178,Math.min(178,lerp(p1[0],p2[0],t)+(Math.random()-.5)*14));
+  const lat=Math.max(-75,Math.min(75,lerp(p1[1],p2[1],t)+(Math.random()-.5)*8));
   const sfx=id>=NAMES.length?' '+(Math.floor(id/NAMES.length)+1):'';
-  return{id:`MMSI${900000000+id*7+123456}`,name:`${PFX[id%4]} ${NAMES[id%NAMES.length]}${sfx}`,
-    flag:FLAGS[id%FLAGS.length],cargo:CARGO[id%CARGO.length],imo:`IMO${9000000+id*13}`,
+  return{id:'MMSI'+(900000000+id*7+123456),
+    name:PFX[id%PFX.length]+' '+NAMES[id%NAMES.length]+sfx,
+    flag:FLAGS[id%FLAGS.length],cargo:CARGO[id%CARGO.length],
+    imo:'IMO'+(9000000+id*13),
     lon,lat,heading:Math.random()*360,speed:8+Math.random()*10,
     laneIdx:id%LANES.length,ptIdx:pi,laneT:t,status:'UNDERWAY',
     track:[{lon,lat}],anomalies:[],darkEvent:null,
-    draught:(3+Math.random()*12).toFixed(1),length:80+Math.floor(Math.random()*300),
-    dwt:10000+Math.floor(Math.random()*300000),dest:lane.pts[lane.pts.length-1],
+    draught:(3+Math.random()*12).toFixed(1),
+    length:80+Math.floor(Math.random()*300),
+    dwt:10000+Math.floor(Math.random()*300000),
+    dest:lane.pts[lane.pts.length-1],
     grossTonnage:10000+Math.floor(Math.random()*180000)};
 }
 
@@ -291,8 +370,8 @@ function updV(v,fa=null){
   laneT=Math.min(laneT+(spd*.008)/Math.max(sl,.01),1);
   if(laneT>=1){ptIdx=ni<lane.pts.length-1?ni:0;laneT=0;}
   const cp1=lane.pts[ptIdx],cp2=lane.pts[Math.min(ptIdx+1,lane.pts.length-1)];
-  let lon=Math.max(-178,Math.min(178,lerp(cp1[0],cp2[0],laneT)+(Math.random()-.5)*.08));
-  let lat=Math.max(-78,Math.min(78,lerp(cp1[1],cp2[1],laneT)+(Math.random()-.5)*.04));
+  let lon=Math.max(-178,Math.min(178,lerp(cp1[0],cp2[0],laneT)+(Math.random()-.5)*.1));
+  let lat=Math.max(-75,Math.min(75,lerp(cp1[1],cp2[1],laneT)+(Math.random()-.5)*.05));
   let speed=Math.max(2,v.speed+(Math.random()-.5)*.4);
   let heading=v.heading+(Math.random()-.5)*5;
   let status=v.status,anomalies=[...v.anomalies],darkEvent=v.darkEvent;
@@ -305,231 +384,360 @@ function updV(v,fa=null){
   return{...v,lon,lat,heading,speed,laneT,ptIdx,status,track,anomalies:anomalies.slice(-5),darkEvent};
 }
 
-function breaches(){
+function getBr(){
   const b=[];
   vessels.forEach(v=>GZ.forEach(z=>{if(hav(v.lon,v.lat,z.lon,z.lat)<z.r*60)b.push({vid:v.id,vname:v.name,zid:z.id,zname:z.name,risk:z.risk});}));
   return b;
 }
 
-// ── CANVAS RENDER ──────────────────────────────────────────────
+// ── CANVAS ────────────────────────────────────────────────────
 const cv=document.getElementById('cv');
 const ctx=cv.getContext('2d');
 
-function resizeCanvas(){
-  const wrap=document.getElementById('cv-wrap');
+function resize(){
+  const wrap=document.getElementById('cvwrap');
   cvW=wrap.clientWidth;cvH=wrap.clientHeight;
-  cv.width=cvW;cv.height=cvH;
-  scaleX=cvW/W;scaleY=cvH/H;
+  cv.width=cvW*devicePixelRatio;cv.height=cvH*devicePixelRatio;
+  cv.style.width=cvW+'px';cv.style.height=cvH+'px';
+  ctx.scale(devicePixelRatio,devicePixelRatio);
 }
 
-function xy(lon,lat){const[x,y]=toXY(lon,lat,cvW,cvH);return[x,y];}
-
-function drawMap(){
+function draw(){
   if(!cvW||!cvH)return;
-  // Ocean
+  ctx.save();
+  ctx.clearRect(0,0,cvW,cvH);
+
+  // Ocean background
   const og=ctx.createLinearGradient(0,0,0,cvH);
   og.addColorStop(0,'#04101E');og.addColorStop(1,'#020709');
   ctx.fillStyle=og;ctx.fillRect(0,0,cvW,cvH);
-  // Grid
-  ctx.strokeStyle='#0E2035';ctx.lineWidth=.3;
-  for(let x=0;x<cvW;x+=50*scaleX){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,cvH);ctx.stroke();}
-  for(let y=0;y<cvH;y+=50*scaleY){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(cvW,y);ctx.stroke();}
-  // Lat lines
-  [[0,'#7A5300',.8],[-30,'#162A40',.2],[-60,'#162A40',.2],[30,'#162A40',.2],[60,'#162A40',.2]].forEach(([lat,col,opa])=>{
-    const[,y]=xy(0,lat);ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(cvW,y);
-    ctx.strokeStyle=col;ctx.lineWidth=lat===0?.8:.2;ctx.globalAlpha=lat===0?.5:.3;
-    if(lat!==0){ctx.setLineDash([3,9]);}else{ctx.setLineDash([]);}
-    ctx.stroke();ctx.setLineDash([]);ctx.globalAlpha=1;
+
+  // Grid (in screen space, spaced every ~50 base units)
+  const gridBase=50;
+  ctx.strokeStyle='rgba(14,32,53,0.6)';ctx.lineWidth=.4;
+  const[sx0,sy0]=mapToScreen(0,0);
+  const[sx1,sy1]=mapToScreen(gridBase,gridBase);
+  const gsx=sx1-sx0,gsy=sy1-sy0;
+  if(gsx>4){
+    for(let gx=sx0%gsx;gx<cvW;gx+=gsx){ctx.beginPath();ctx.moveTo(gx,0);ctx.lineTo(gx,cvH);ctx.stroke();}
+  }
+  if(gsy>4){
+    for(let gy=sy0%gsy;gy<cvH;gy+=gsy){ctx.beginPath();ctx.moveTo(0,gy);ctx.lineTo(cvW,gy);ctx.stroke();}
+  }
+
+  // Latitude reference lines
+  [[0,'#7A5300',.6,.8],[30,'#162A40',.25,.25],[-30,'#162A40',.25,.25],[60,'#162A40',.2,.2],[-60,'#162A40',.2,.2]].forEach(([lat,col,opa,lw])=>{
+    const[,sy]=ll2s(0,lat);
+    if(sy<0||sy>cvH)return;
+    ctx.beginPath();ctx.moveTo(0,sy);ctx.lineTo(cvW,sy);
+    ctx.strokeStyle=col;ctx.lineWidth=lw;ctx.globalAlpha=opa;
+    ctx.setLineDash(lat===0?[]:[3,8]);ctx.stroke();ctx.setLineDash([]);ctx.globalAlpha=1;
   });
-  // Land
-  ctx.fillStyle='#1C3022';ctx.strokeStyle='#2C4A30';ctx.lineWidth=.7;
-  LAND.forEach(poly=>{
-    if(poly.length<3)return;
+
+  // Land polygons - using pre-projected coords scaled to current viewport
+  ctx.fillStyle='#1E3520';ctx.strokeStyle='#2E4A2E';ctx.lineWidth=Math.max(.3,vpZoom*.4);
+  LAND.forEach(seg=>{
+    if(seg.length<3)return;
     ctx.beginPath();
-    poly.forEach(([px,py],i)=>{
-      // These are already screen coords scaled to W=1000,H=520 - rescale to current canvas
-      const sx=px*scaleX,sy=py*scaleY;
+    seg.forEach(([px,py],i)=>{
+      // px,py are in W=1000,H=520 base coords
+      const[sx,sy]=mapToScreen(px,py);
       i===0?ctx.moveTo(sx,sy):ctx.lineTo(sx,sy);
     });
     ctx.closePath();ctx.fill();ctx.stroke();
   });
-  // Lanes
-  ctx.strokeStyle='#0EA5E9';ctx.lineWidth=.5;ctx.globalAlpha=.1;ctx.setLineDash([6,14]);
+
+  // Shipping lanes
+  ctx.strokeStyle='#0EA5E9';ctx.lineWidth=.5;ctx.globalAlpha=.12;ctx.setLineDash([6,12]);
   LANES.forEach(lane=>{
     ctx.beginPath();
-    lane.pts.forEach(([lon,lat],i)=>{const[x,y]=xy(lon,lat);i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);});
+    lane.pts.forEach(([lon,lat],i)=>{
+      const[sx,sy]=ll2s(lon,lat);
+      i===0?ctx.moveTo(sx,sy):ctx.lineTo(sx,sy);
+    });
     ctx.stroke();
   });
   ctx.setLineDash([]);ctx.globalAlpha=1;
-  // Zones
+
+  // Geofence zones
   GZ.forEach(z=>{
-    const[zx,zy]=xy(z.lon,z.lat);
+    const[zsx,zsy]=ll2s(z.lon,z.lat);
     const col=z.risk==='CRITICAL'?'#E53E3E':z.risk==='HIGH'?'#F0A500':'#0EA5E9';
-    const rad=z.r*20*scaleX;
-    ctx.beginPath();ctx.arc(zx,zy,rad,0,Math.PI*2);
+    // radius in map pixels, scaled
+    const[rx]=mapToScreen(baseXY(z.lon,z.lat)[0]+z.r*20,baseXY(z.lon,z.lat)[1]);
+    const rad=Math.abs(rx-zsx);
+    ctx.beginPath();ctx.arc(zsx,zsy,rad,0,Math.PI*2);
     ctx.fillStyle=col;ctx.globalAlpha=.07;ctx.fill();
-    ctx.strokeStyle=col;ctx.lineWidth=.7;ctx.globalAlpha=.8;ctx.setLineDash([4,6]);ctx.stroke();
+    ctx.strokeStyle=col;ctx.lineWidth=.8;ctx.globalAlpha=.8;ctx.setLineDash([4,6]);ctx.stroke();
     ctx.setLineDash([]);ctx.globalAlpha=1;
-    ctx.fillStyle=col;ctx.font=`8px 'JetBrains Mono',monospace`;ctx.textAlign='center';ctx.globalAlpha=.7;
-    ctx.fillText(z.name,zx,zy-rad-4);ctx.globalAlpha=1;
+    if(vpZoom>1.2||rad>15){
+      ctx.fillStyle=col;ctx.globalAlpha=.75;ctx.textAlign='center';
+      ctx.font=`${Math.max(8,9*vpZoom*.6)}px 'JetBrains Mono',monospace`;
+      ctx.fillText(z.name,zsx,zsy-rad-4);ctx.globalAlpha=1;
+    }
   });
-  // Track for selected
+
+  // Track for selected vessel
   const sel=selId?vessels.find(v=>v.id===selId):null;
   if(sel&&sel.track.length>1){
     const col=STC[sel.status]||'#7BA8CC';
-    ctx.strokeStyle=col;ctx.lineWidth=1.5;ctx.globalAlpha=.55;
+    ctx.strokeStyle=col;ctx.lineWidth=1.5;ctx.globalAlpha=.6;
     ctx.beginPath();
-    sel.track.forEach(({lon,lat},i)=>{const[x,y]=xy(lon,lat);i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);});
+    sel.track.forEach(({lon,lat},i)=>{const[sx,sy]=ll2s(lon,lat);i===0?ctx.moveTo(sx,sy):ctx.lineTo(sx,sy);});
     ctx.stroke();ctx.globalAlpha=1;
   }
+
   // Vessels
+  const sz=Math.max(3,Math.min(8,4*Math.sqrt(vpZoom)));
   vessels.forEach(v=>{
-    const[vx,vy]=xy(v.lon,v.lat);
+    const[vsx,vsy]=ll2s(v.lon,v.lat);
+    if(vsx<-20||vsx>cvW+20||vsy<-20||vsy>cvH+20)return; // cull offscreen
     const col=STC[v.status]||'#7BA8CC';
     const isSel=v.id===selId;
     const isDark=v.status==='DARK';
-    const sz=isSel?7:4;
-    // Selection ring
-    if(isSel){ctx.beginPath();ctx.arc(vx,vy,18*scaleX,0,Math.PI*2);ctx.strokeStyle=col;ctx.lineWidth=.8;ctx.globalAlpha=.35;ctx.stroke();ctx.globalAlpha=1;}
-    // Dark pulse (static ring since canvas can't animate easily - use time)
+
+    if(isSel){ctx.beginPath();ctx.arc(vsx,vsy,16,0,Math.PI*2);ctx.strokeStyle=col;ctx.lineWidth=.8;ctx.globalAlpha=.35;ctx.stroke();ctx.globalAlpha=1;}
+
     if(isDark){
-      const pulse=(Math.sin(Date.now()/500)*.5+.5);
-      ctx.beginPath();ctx.arc(vx,vy,(8+pulse*14)*scaleX,0,Math.PI*2);
-      ctx.strokeStyle='#E53E3E';ctx.lineWidth=1.2;ctx.globalAlpha=1-pulse;ctx.stroke();ctx.globalAlpha=1;
+      const pulse=(Math.sin(Date.now()/400)*.5+.5);
+      ctx.beginPath();ctx.arc(vsx,vsy,(sz+pulse*sz*2.5),0,Math.PI*2);
+      ctx.strokeStyle='#E53E3E';ctx.lineWidth=1.2;ctx.globalAlpha=.9*(1-pulse);ctx.stroke();ctx.globalAlpha=1;
     }
-    // Arrow
+
+    // Arrow shape
     const h=v.heading*Math.PI/180;
-    const pts=[[0,-sz*1.6],[-sz*.6,sz*.9],[0,sz*.3],[sz*.6,sz*.9]];
+    const pts=[[0,-sz*1.7],[-sz*.65,sz*.85],[0,sz*.3],[sz*.65,sz*.85]];
     ctx.beginPath();
     pts.forEach(([px,py],i)=>{
-      const rx=px*Math.cos(h)-py*Math.sin(h);const ry=px*Math.sin(h)+py*Math.cos(h);
-      const sx2=(vx+rx*scaleX),sy2=(vy+ry*scaleY);
-      i===0?ctx.moveTo(sx2,sy2):ctx.lineTo(sx2,sy2);
+      const rx=px*Math.cos(h)-py*Math.sin(h)+vsx;
+      const ry=px*Math.sin(h)+py*Math.cos(h)+vsy;
+      i===0?ctx.moveTo(rx,ry):ctx.lineTo(rx,ry);
     });
-    ctx.closePath();ctx.fillStyle=col;ctx.globalAlpha=isSel?1:.85;ctx.fill();ctx.globalAlpha=1;
+    ctx.closePath();ctx.fillStyle=col;ctx.globalAlpha=isSel?1:.88;ctx.fill();ctx.globalAlpha=1;
+
+    if(isSel){ctx.strokeStyle='#fff';ctx.lineWidth=.5;ctx.globalAlpha=.4;ctx.stroke();ctx.globalAlpha=1;}
+
     // Anomaly dot
     if(v.anomalies.length>0){
-      const pulse=Math.sin(Date.now()/500)*.5+.5;
-      ctx.beginPath();ctx.arc(vx+sz*scaleX,vy-sz*scaleY,2.5*scaleX,0,Math.PI*2);
-      ctx.fillStyle='#E53E3E';ctx.globalAlpha=.3+pulse*.7;ctx.fill();ctx.globalAlpha=1;
+      const pulse=Math.sin(Date.now()/600)*.5+.5;
+      ctx.beginPath();ctx.arc(vsx+sz,vsy-sz,2.2,0,Math.PI*2);
+      ctx.fillStyle='#E53E3E';ctx.globalAlpha=.4+pulse*.6;ctx.fill();ctx.globalAlpha=1;
+    }
+
+    // Name label at high zoom
+    if(isSel||(vpZoom>4&&!isDark)){
+      ctx.fillStyle=isSel?'#E8F4FF':'#7BA8CC';
+      ctx.font=`${isSel?10:8}px 'JetBrains Mono',monospace`;
+      ctx.textAlign='left';ctx.globalAlpha=isSel?1:.7;
+      ctx.fillText(v.name,vsx+sz+3,vsy+3);ctx.globalAlpha=1;
     }
   });
-  // Speed vector
+
+  // Speed vector for selected
   if(sel){
-    const[vx,vy]=xy(sel.lon,sel.lat);
-    const r=(sel.heading-90)*Math.PI/180,vl=sel.speed*4*scaleX;
-    ctx.beginPath();ctx.moveTo(vx,vy);ctx.lineTo(vx+Math.cos(r)*vl,vy+Math.sin(r)*vl);
+    const[vsx,vsy]=ll2s(sel.lon,sel.lat);
+    const r=(sel.heading-90)*Math.PI/180,vl=sel.speed*4*vpZoom*.5;
+    ctx.beginPath();ctx.moveTo(vsx,vsy);ctx.lineTo(vsx+Math.cos(r)*vl,vsy+Math.sin(r)*vl);
     ctx.strokeStyle='#F0A500';ctx.lineWidth=1.5;ctx.setLineDash([4,3]);ctx.globalAlpha=.9;ctx.stroke();
     ctx.setLineDash([]);ctx.globalAlpha=1;
   }
-  document.getElementById('mcnt').textContent=`LIVE · ${vessels.length} VESSELS`;
+
+  document.getElementById('mcnt').textContent=`${vessels.length} VESSELS · SCROLL TO ZOOM · DRAG TO PAN`;
+  ctx.restore();
 }
 
-// Click handling on canvas
-cv.addEventListener('click',e=>{
+// ── MOUSE INTERACTION ─────────────────────────────────────────
+let drag=false,dragStart=null,vpStart=null;
+let hoverV=null;
+
+cv.addEventListener('wheel',e=>{
+  e.preventDefault();
   const rect=cv.getBoundingClientRect();
   const mx=e.clientX-rect.left,my=e.clientY-rect.top;
-  let closest=null,minD=Infinity;
-  vessels.forEach(v=>{
-    const[vx,vy]=xy(v.lon,v.lat);
-    const d=Math.sqrt((vx-mx)**2+(vy-my)**2);
-    if(d<20&&d<minD){minD=d;closest=v;}
-  });
-  if(closest){selId=closest.id;curAI=null;showDetail(closest);goTab('map');}
+  const[bx,by]=screenToMap(mx,my);
+  const factor=e.deltaY<0?1.2:1/1.2;
+  vpZoom=Math.max(1,Math.min(20,vpZoom*factor));
+  // Zoom toward mouse
+  vpX=bx-mx/(vpZoom*cvW/BASE_W);
+  vpY=by-my/(vpZoom*cvH/BASE_H);
+  clampView();
+  document.getElementById('mzlvl').textContent=vpZoom.toFixed(1)+'×';
+  document.getElementById('kzoom').textContent=vpZoom.toFixed(1)+'×';
+  draw();
+},{passive:false});
+
+cv.addEventListener('mousedown',e=>{
+  drag=true;dragStart=[e.clientX,e.clientY];vpStart=[vpX,vpY];
+  cv.classList.add('grabbing');
+});
+window.addEventListener('mousemove',e=>{
+  if(drag){
+    const dx=e.clientX-dragStart[0],dy=e.clientY-dragStart[1];
+    vpX=vpStart[0]-dx/(vpZoom*cvW/BASE_W);
+    vpY=vpStart[1]-dy/(vpZoom*cvH/BASE_H);
+    clampView();draw();
+  } else {
+    // Hover tooltip
+    const rect=cv.getBoundingClientRect();
+    const mx=e.clientX-rect.left,my=e.clientY-rect.top;
+    let closest=null,minD=Infinity;
+    vessels.forEach(v=>{
+      const[sx,sy]=ll2s(v.lon,v.lat);
+      const d=Math.sqrt((sx-mx)**2+(sy-my)**2);
+      if(d<14&&d<minD){minD=d;closest=v;}
+    });
+    const tt=document.getElementById('tooltip');
+    if(closest){
+      tt.style.display='block';
+      tt.style.left=(e.clientX-cv.getBoundingClientRect().left+12)+'px';
+      tt.style.top=(e.clientY-cv.getBoundingClientRect().top-8)+'px';
+      const col=STC[closest.status]||'#7BA8CC';
+      tt.innerHTML=`<span style="color:${col}">${closest.name}</span><br/><span style="color:#3A5E7A;font-size:9px">${closest.flag} · ${closest.cargo} · ${closest.speed.toFixed(1)}kt</span>`;
+      cv.style.cursor='pointer';
+    } else {
+      tt.style.display='none';
+      cv.style.cursor=drag?'grabbing':'grab';
+    }
+  }
+});
+window.addEventListener('mouseup',e=>{
+  if(drag){
+    const moved=Math.abs(e.clientX-dragStart[0])+Math.abs(e.clientY-dragStart[1]);
+    drag=false;cv.classList.remove('grabbing');
+    if(moved<5){
+      // Click - select vessel
+      const rect=cv.getBoundingClientRect();
+      const mx=e.clientX-rect.left,my=e.clientY-rect.top;
+      let closest=null,minD=Infinity;
+      vessels.forEach(v=>{
+        const[sx,sy]=ll2s(v.lon,v.lat);
+        const d=Math.sqrt((sx-mx)**2+(sy-my)**2);
+        if(d<18&&d<minD){minD=d;closest=v;}
+      });
+      if(closest){selId=closest.id;curAI=null;showDtl(closest);goTab('map');}
+    }
+  }
 });
 
+// Touch support
+let t0=null,vp0=null,lastDist=null;
+cv.addEventListener('touchstart',e=>{
+  if(e.touches.length===1){t0=[e.touches[0].clientX,e.touches[0].clientY];vp0=[vpX,vpY];lastDist=null;}
+  else if(e.touches.length===2){const dx=e.touches[0].clientX-e.touches[1].clientX,dy=e.touches[0].clientY-e.touches[1].clientY;lastDist=Math.sqrt(dx*dx+dy*dy);}
+  e.preventDefault();},{passive:false});
+cv.addEventListener('touchmove',e=>{
+  if(e.touches.length===1&&t0&&vp0){
+    const dx=e.touches[0].clientX-t0[0],dy=e.touches[0].clientY-t0[1];
+    vpX=vp0[0]-dx/(vpZoom*cvW/BASE_W);vpY=vp0[1]-dy/(vpZoom*cvH/BASE_H);clampView();draw();
+  } else if(e.touches.length===2&&lastDist){
+    const dx=e.touches[0].clientX-e.touches[1].clientX,dy=e.touches[0].clientY-e.touches[1].clientY;
+    const dist=Math.sqrt(dx*dx+dy*dy);
+    const factor=dist/lastDist;
+    const cx=(e.touches[0].clientX+e.touches[1].clientX)/2,cy=(e.touches[0].clientY+e.touches[1].clientY)/2;
+    const rect=cv.getBoundingClientRect();
+    const[bx,by]=screenToMap(cx-rect.left,cy-rect.top);
+    vpZoom=Math.max(1,Math.min(20,vpZoom*factor));
+    vpX=bx-(cx-rect.left)/(vpZoom*cvW/BASE_W);vpY=by-(cy-rect.top)/(vpZoom*cvH/BASE_H);
+    clampView();lastDist=dist;draw();
+    document.getElementById('mzlvl').textContent=vpZoom.toFixed(1)+'×';
+    document.getElementById('kzoom').textContent=vpZoom.toFixed(1)+'×';
+  }
+  e.preventDefault();},{passive:false});
+cv.addEventListener('touchend',e=>{t0=null;vp0=null;lastDist=null;},{passive:false});
+
 // ── DETAIL PANEL ──────────────────────────────────────────────
-function showDetail(v){
-  document.getElementById('dt-hdr').textContent='VESSEL · '+v.name;
-  document.getElementById('dt-empty').style.display='none';
-  const con=document.getElementById('dt-con');con.style.display='block';
-  renderDetail(v);
+let selId=null,curAI=null,aiRunning=false,curTab='map';
+let vessels=[],events=[];
+
+function showDtl(v){
+  document.getElementById('dthdr').textContent='VESSEL · '+v.name;
+  document.getElementById('dtempty').style.display='none';
+  document.getElementById('dtcon').style.display='block';
+  renderDtl(v);
 }
 
-function renderDetail(v){
+function renderDtl(v){
   const col=STC[v.status]||'#7BA8CC';
   const e=getETA(v);
-  const con=document.getElementById('dt-con');
-  const fields=[['Flag',v.flag],['Cargo',v.cargo],['Speed',v.speed.toFixed(1)+' kts'],['Heading',v.heading.toFixed(0)+'°T'],['Lat',v.lat.toFixed(3)+'°'],['Lon',v.lon.toFixed(3)+'°'],['DWT',(v.dwt/1000).toFixed(0)+'K MT'],['LOA',v.length+'m'],['ETA',e.days+'d'],['Dist',e.dist.toLocaleString()+' NM']];
-  con.innerHTML=`<div class="vhdr"><div><div class="vn">${v.name}</div><div class="vm">${v.id} · ${v.imo}</div></div><span class="vbdg" style="color:${col};background:${col}20;border-color:${col}40">${v.status}</span></div>
-  <div class="vg">${fields.map(([l,val])=>`<div class="vc"><div class="vcl">${l}</div><div class="vcv">${val}</div></div>`).join('')}</div>
-  ${v.anomalies.length?`<div class="ast">ANOMALY HISTORY</div>${v.anomalies.slice().reverse().map(a=>`<div class="ar" style="border-left-color:${SC[a.sev]||'#F0A500'}"><div style="flex:1"><div class="at" style="color:${SC[a.sev]||'#F0A500'}">${a.type}</div><div class="atm">${new Date(a.ts).toLocaleTimeString()}</div></div><div class="asv" style="color:${SC[a.sev]}">${a.sev}</div></div>`).join('')}`:''}
-  <button id="aibtn" onclick="runAI()" ${!v.anomalies.length||aiAnalyzing?'disabled':''} style="background:${v.anomalies.length&&!aiAnalyzing?'#F0A500':'#0A1520'};color:${v.anomalies.length&&!aiAnalyzing?'#030810':'#3A5E7A'}">${aiAnalyzing?'⟳ ANALYZING...':(v.anomalies.length?'⚡ AI THREAT ASSESSMENT':'NO ANOMALIES')}</button>
-  <div id="air" style="display:${curAI?'block':'none'}"></div>`;
-  if(curAI)showAI(curAI);
+  const flds=[['Flag',v.flag],['Cargo',v.cargo],['Speed',v.speed.toFixed(1)+' kts'],['Heading',v.heading.toFixed(0)+'°T'],['Lat',v.lat.toFixed(3)+'°'],['Lon',v.lon.toFixed(3)+'°'],['DWT',(v.dwt/1000).toFixed(0)+'K MT'],['LOA',v.length+'m'],['ETA',e.days+'d'],['Dist',e.dist.toLocaleString()+' NM']];
+  document.getElementById('dtcon').innerHTML=
+    `<div class="vhdr"><div><div class="vn">${v.name}</div><div class="vm">${v.id} · ${v.imo}</div></div><span class="vbdg" style="color:${col};background:${col}20;border-color:${col}40">${v.status}</span></div>
+    <div class="vg">${flds.map(([l,val])=>`<div class="vc"><div class="vcl">${l}</div><div class="vcv">${val}</div></div>`).join('')}</div>
+    ${v.anomalies.length?`<div class="ast">ANOMALY HISTORY</div>${v.anomalies.slice().reverse().map(a=>`<div class="ar" style="border-left-color:${SC[a.sev]||'#F0A500'}"><div style="flex:1"><div class="at" style="color:${SC[a.sev]||'#F0A500'}">${a.type}</div><div class="atm">${new Date(a.ts).toLocaleTimeString()}</div></div><div class="asv" style="color:${SC[a.sev]}">${a.sev}</div></div>`).join('')}`:''}
+    <button id="aibtn" onclick="runAI()" ${!v.anomalies.length||aiRunning?'disabled':''} style="width:100%;border:none;border-radius:5px;padding:8px;cursor:${v.anomalies.length&&!aiRunning?'pointer':'not-allowed'};font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:.05em;margin-top:9px;background:${v.anomalies.length&&!aiRunning?'#F0A500':'#0A1520'};color:${v.anomalies.length&&!aiRunning?'#030810':'#3A5E7A'}">${aiRunning?'⟳ ANALYZING...':(v.anomalies.length?'⚡ AI THREAT ASSESSMENT':'NO ANOMALIES')}</button>
+    <div id="airesult" style="display:${curAI?'block':'none'}"></div>`;
+  if(curAI)showAIRes(curAI);
 }
 
-function showAI(r){
-  curAI=r;const el=document.getElementById('air');if(!el)return;
-  const col=SC[r.riskLevel]||'#F0A500';el.style.display='block';el.style.border=`1px solid ${col}`;
-  el.innerHTML=`<div class="aih"><div class="aihl">AI ASSESSMENT</div><div style="display:flex;gap:7px;align-items:center"><span style="color:#3A5E7A;font-size:9px;font-family:monospace">CONF ${r.confidence}%</span><span class="aibdg" style="background:${col}25;color:${col}">${r.riskLevel}</span></div></div>
-  <div style="margin-bottom:7px"><div class="rbb"><div class="rbf" style="width:${r.riskScore}%"></div></div><div style="display:flex;justify-content:space-between;margin-top:2px"><span style="color:#3A5E7A;font-size:9px;font-family:monospace">RISK SCORE</span><span style="color:#E8F4FF;font-size:10px;font-family:monospace;font-weight:700">${r.riskScore}/100</span></div></div>
+function showAIRes(r){
+  curAI=r;const el=document.getElementById('airesult');if(!el)return;
+  const col=SC[r.riskLevel]||'#F0A500';
+  el.style.display='block';el.style.border=`1px solid ${col}`;el.style.borderRadius='7px';el.style.padding='11px';el.style.marginTop='9px';
+  el.innerHTML=`<div class="aih"><div style="color:#E8F4FF;font-size:12px;font-weight:700">AI ASSESSMENT</div><div style="display:flex;gap:7px;align-items:center"><span style="color:#3A5E7A;font-size:9px;font-family:monospace">CONF ${r.confidence}%</span><span class="aibdg" style="background:${col}25;color:${col}">${r.riskLevel}</span></div></div>
+  <div style="margin-bottom:7px"><div class="rbb"><div class="rbf" style="width:${r.riskScore}%"></div></div><div style="display:flex;justify-content:space-between;margin-top:2px"><span style="color:#3A5E7A;font-size:9px;font-family:monospace">RISK</span><span style="color:#E8F4FF;font-size:10px;font-family:monospace;font-weight:700">${r.riskScore}/100</span></div></div>
   <div class="aia">${r.tacticalAssessment}</div>
-  ${[['Probable Explanations',r.probableExplanations,'#0EA5E9'],['Recommended Actions',r.recommendedActions,'#F0A500'],['Flags of Concern',r.flagsOfConcern,'#E53E3E']].map(([t,items,c])=>`<div class="ais" style="color:${c}">${t.toUpperCase()}</div>${(items||[]).map(i=>`<div class="aii" style="border-left-color:${c}40">${i}</div>`).join('')}`).join('')}
-  <div class="aie">🌊 ${r.environmentalImpact}</div><div class="aitags">${(r.regulatoryReferences||[]).map(ref=>`<span class="aitag">${ref}</span>`).join('')}</div>`;
+  ${[['Probable Explanations',r.probableExplanations,'#0EA5E9'],['Recommended Actions',r.recommendedActions,'#F0A500'],['Flags of Concern',r.flagsOfConcern,'#E53E3E']].map(([t,items,c])=>`<div class="aisec" style="color:${c}">${t.toUpperCase()}</div>${(items||[]).map(i=>`<div class="aiitem" style="border-left-color:${c}40">${i}</div>`).join('')}`).join('')}
+  <div class="aienv">🌊 ${r.environmentalImpact}</div>
+  <div class="aitags">${(r.regulatoryReferences||[]).map(ref=>`<span class="aitag">${ref}</span>`).join('')}</div>`;
 }
 
 async function runAI(){
   const v=vessels.find(vv=>vv.id===selId);if(!v||!v.anomalies.length)return;
-  aiAnalyzing=true;renderDetail(v);
+  aiRunning=true;renderDtl(v);
   const a=v.anomalies[v.anomalies.length-1];
-  const zb=breaches().find(z=>z.vid===v.id);const e=getETA(v);
+  const zb=getBr().find(z=>z.vid===v.id);const e=getETA(v);
   const prompt=`You are a maritime intelligence analyst. Analyze this vessel anomaly.
-VESSEL: ${v.name} (${v.id}) | Flag: ${v.flag} | Cargo: ${v.cargo}
-Position: ${v.lat.toFixed(3)}°, ${v.lon.toFixed(3)}° | Speed: ${v.speed.toFixed(1)}kts | Status: ${v.status}
-DWT: ${v.dwt.toLocaleString()} MT | ETA: ${e.days} days (${e.dist} NM)
-ANOMALY: ${a.type} | Severity: ${a.sev}
-${zb?'ZONE: Within '+zb.zname+' ('+zb.risk+')':'No geofence alert'}
-Respond ONLY with valid JSON, no markdown:
-{"riskScore":75,"riskLevel":"HIGH","tacticalAssessment":"Two sentence assessment.","probableExplanations":["exp1","exp2","exp3"],"recommendedActions":["act1","act2","act3"],"flagsOfConcern":["flag1","flag2"],"environmentalImpact":"One sentence.","regulatoryReferences":["SOLAS V/19.2","MARPOL Annex I"],"confidence":80}`;
+VESSEL: ${v.name} | Flag: ${v.flag} | Cargo: ${v.cargo} | Status: ${v.status}
+Position: ${v.lat.toFixed(3)}°, ${v.lon.toFixed(3)}° | Speed: ${v.speed.toFixed(1)}kts
+DWT: ${v.dwt.toLocaleString()} MT | ETA: ${e.days} days
+ANOMALY: ${a.type} | Severity: ${a.sev}${zb?' | ZONE: '+zb.zname+' ('+zb.risk+')':''}
+Respond ONLY with valid JSON (no markdown fences):
+{"riskScore":75,"riskLevel":"HIGH","tacticalAssessment":"Two sentences.","probableExplanations":["a","b","c"],"recommendedActions":["a","b","c"],"flagsOfConcern":["a","b"],"environmentalImpact":"One sentence.","regulatoryReferences":["SOLAS V/19.2","MARPOL Annex I"],"confidence":80}`;
   try{
     const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:1000,messages:[{role:'user',content:prompt}]})});
     const data=await res.json();
     const text=data.content.filter(b=>b.type==='text').map(b=>b.text).join('');
     const result=JSON.parse(text.replace(/```json|```/g,'').trim());
-    aiAnalyzing=false;renderDetail(v);showAI(result);
+    aiRunning=false;renderDtl(v);showAIRes(result);
   }catch(err){
-    aiAnalyzing=false;
-    showAI({riskScore:72,riskLevel:'HIGH',tacticalAssessment:`${v.name} exhibits ${a.type} requiring investigation. Pattern consistent with evasion.`,probableExplanations:['AIS fault','Deliberate suppression','Unauthorized rendezvous'],recommendedActions:['Flag for MPA tasking','Cross-reference LRIT','Query last port'],flagsOfConcern:[v.flag+' registry risk',v.cargo+' sensitivity'],environmentalImpact:'Potential discharge risk if cargo involves crude or chemicals.',regulatoryReferences:['SOLAS V/19.2','MARPOL Annex I Reg 34'],confidence:78});
-    renderDetail(v);
+    aiRunning=false;
+    showAIRes({riskScore:72,riskLevel:'HIGH',tacticalAssessment:`${v.name} exhibits ${a.type} behavior requiring immediate investigation. Pattern consistent with deliberate evasion or unauthorized rendezvous.`,probableExplanations:['AIS transponder fault','Deliberate signal suppression','Unauthorized cargo transfer'],recommendedActions:['Flag for maritime patrol tasking','Cross-reference LRIT data','Query last port of call'],flagsOfConcern:[v.flag+' flag registry risk',v.cargo+' cargo sensitivity'],environmentalImpact:'Potential unauthorized discharge risk if cargo involves crude or chemical products.',regulatoryReferences:['SOLAS V/19.2','MARPOL Annex I Reg 34'],confidence:78});
+    renderDtl(v);
   }
 }
 
-// ── KPIs ─────────────────────────────────────────────────────
+// ── KPI ───────────────────────────────────────────────────────
 function updKPI(){
   const dark=vessels.filter(v=>v.status==='DARK').length;
   const sts=vessels.filter(v=>v.status==='STS_OPERATION').length;
-  const anom=vessels.filter(v=>v.anomalies.length>0).length;
-  const avgS=(vessels.reduce((s,v)=>s+v.speed,0)/vessels.length).toFixed(1);
-  const flags=[...new Set(vessels.map(v=>v.flag))].length;
+  const anm=vessels.filter(v=>v.anomalies.length>0).length;
+  const spd=(vessels.reduce((s,v)=>s+v.speed,0)/vessels.length).toFixed(1);
+  const flgs=[...new Set(vessels.map(v=>v.flag))].length;
   const dwt=(vessels.reduce((s,v)=>s+v.dwt,0)/1e6).toFixed(1);
-  const zb=breaches().length;
-  document.getElementById('kv').textContent=vessels.length;
-  const kd=document.getElementById('kd');kd.textContent=dark;kd.style.color=dark>0?'#E53E3E':'#3A5E7A';
-  const ks=document.getElementById('ks');ks.textContent=sts;ks.style.color=sts>0?'#F0A500':'#3A5E7A';
-  const ka=document.getElementById('ka');ka.textContent=anom;ka.style.color=anom>0?'#F0A500':'#3A5E7A';
-  document.getElementById('ksp').textContent=avgS+'kt';
-  document.getElementById('kf').textContent=flags;
-  document.getElementById('kw').textContent=dwt+'M MT';
-  const kz=document.getElementById('kz');kz.textContent=zb;kz.style.color=zb>0?'#E53E3E':'#3A5E7A';
-  const ke=document.getElementById('ke');ke.textContent=events.length;ke.style.color=events.length>0?'#F0A500':'#3A5E7A';
-  // Breach bar
-  const brs=breaches();
-  const bb=document.getElementById('brch');
-  if(brs.length>0){bb.style.display='block';document.getElementById('brch-l').innerHTML=brs.slice(0,8).map(b=>`<span class="btag" style="color:${SC[b.risk]||'#F0A500'}" onclick="selV('${b.vid}')">${b.zname} · ${b.vname}</span>`).join('');}
+  const brs=getBr();
+  document.getElementById('kves').textContent=vessels.length;
+  const kd=document.getElementById('kdrk');kd.textContent=dark;kd.style.color=dark?'#E53E3E':'#3A5E7A';
+  const ks=document.getElementById('ksts');ks.textContent=sts;ks.style.color=sts?'#F0A500':'#3A5E7A';
+  const ka=document.getElementById('kanm');ka.textContent=anm;ka.style.color=anm?'#F0A500':'#3A5E7A';
+  document.getElementById('kspd').textContent=spd+'kt';
+  document.getElementById('kflg').textContent=flgs;
+  document.getElementById('kdwt').textContent=dwt+'M MT';
+  const kz=document.getElementById('kzne');kz.textContent=brs.length;kz.style.color=brs.length?'#E53E3E':'#3A5E7A';
+  const ke=document.getElementById('kevt');ke.textContent=events.length;ke.style.color=events.length?'#F0A500':'#3A5E7A';
+  const bb=document.getElementById('brchbar');
+  if(brs.length){bb.style.display='block';document.getElementById('brlist').innerHTML=brs.slice(0,8).map(b=>`<span class="btag" style="color:${SC[b.risk]||'#F0A500'}" onclick="selV('${b.vid}')">${b.zname} · ${b.vname}</span>`).join('');}
   else{bb.style.display='none';}
 }
 
-function selV(id){selId=id;curAI=null;const v=vessels.find(vv=>vv.id===id);if(v){showDetail(v);goTab('map');}}
+function selV(id){selId=id;curAI=null;const v=vessels.find(vv=>vv.id===id);if(v){showDtl(v);goTab('map');}}
 
-// ── TABS ─────────────────────────────────────────────────────
+// ── TABS ──────────────────────────────────────────────────────
 function goTab(name,btn){
   curTab=name;
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
-  if(btn)btn.classList.add('on');
-  else document.querySelectorAll('.tab').forEach((t,i)=>{if(['map','fleet','events','cargo','intel'][i]===name)t.classList.add('on');});
+  document.querySelectorAll('.tab').forEach((t,i)=>{t.classList.toggle('on',['map','fleet','events','cargo','intel'][i]===name);});
   document.querySelectorAll('.pnl').forEach(p=>p.classList.remove('on'));
   document.getElementById('pnl-'+name).classList.add('on');
+  if(name==='map'){resize();draw();}
   if(name==='fleet')renderFleet();
   if(name==='events')renderEvents();
   if(name==='cargo')renderCargo();
@@ -541,22 +749,16 @@ let filtSt='ALL';
 function setFilt(s,btn){filtSt=s;document.querySelectorAll('.fb').forEach(b=>b.classList.remove('on'));btn.classList.add('on');renderFleet();}
 function renderFleet(){
   const q=(document.getElementById('fsrch').value||'').toLowerCase();
-  const fil=vessels.filter(v=>{
-    const ms=filtSt==='ALL'||v.status===filtSt||(filtSt==='ANOMALY'&&v.anomalies.length>0);
-    return ms&&(!q||v.name.toLowerCase().includes(q)||v.id.includes(q));
-  });
-  document.getElementById('fcnt').textContent=fil.length+' vessels';
-  document.getElementById('ftb').innerHTML=fil.map(v=>{
-    const col=STC[v.status]||'#7BA8CC';
-    return`<tr onclick="selV('${v.id}')"><td style="color:#E8F4FF">${v.name}</td><td style="color:#3A5E7A;font-size:9px">${v.id}</td><td style="color:#7BA8CC">${v.flag}</td><td style="color:#7BA8CC">${v.cargo}</td><td style="color:#0EA5E9">${v.speed.toFixed(1)}kt</td><td><span style="color:${col};background:${col}15;padding:1px 5px;border-radius:2px">${v.status}</span></td><td>${v.anomalies.length?`<span style="color:#E53E3E">⚠${v.anomalies.length}</span>`:'<span style="color:#3A5E7A">—</span>'}</td></tr>`;
-  }).join('');
+  const fil=vessels.filter(v=>(filtSt==='ALL'||v.status===filtSt||(filtSt==='ANOMALY'&&v.anomalies.length>0))&&(!q||v.name.toLowerCase().includes(q)||v.id.includes(q)));
+  document.getElementById('fcnt').textContent=fil.length+' of '+vessels.length+' vessels';
+  document.getElementById('ftb').innerHTML=fil.map(v=>{const col=STC[v.status]||'#7BA8CC';return`<tr onclick="selV('${v.id}')"><td style="color:#E8F4FF">${v.name}</td><td style="color:#3A5E7A;font-size:9px">${v.id}</td><td style="color:#7BA8CC">${v.flag}</td><td style="color:#7BA8CC">${v.cargo}</td><td style="color:#0EA5E9">${v.speed.toFixed(1)}kt</td><td><span style="color:${col};background:${col}15;padding:1px 5px;border-radius:2px">${v.status}</span></td><td>${v.anomalies.length?'<span style="color:#E53E3E">⚠'+v.anomalies.length+'</span>':'<span style="color:#3A5E7A">—</span>'}</td></tr>`;}).join('');
 }
 
 // ── EVENTS ────────────────────────────────────────────────────
 function renderEvents(){
-  const el=document.getElementById('el');
-  el.innerHTML=events.length===0?'<div style="color:#3A5E7A;font-size:10px;font-family:monospace;text-align:center;padding:20px">MONITORING...</div>':events.map(ev=>{const col=SC[ev.sev]||'#7BA8CC';return`<div class="ec" style="border-left-color:${col}"><div class="etp"><span class="ety" style="color:${col}">${ev.type}</span><span class="etm">${new Date(ev.ts).toLocaleTimeString()}</span></div><div class="evn">${ev.vname}</div><div class="evm">${ev.vid}</div></div>`;}).join('');
-  document.getElementById('es').innerHTML=[{l:'Total Events',v:events.length,c:'#0EA5E9'},{l:'Critical/High',v:events.filter(e=>['CRITICAL','HIGH'].includes(e.sev)).length,c:'#E53E3E'},{l:'AIS Dark',v:events.filter(e=>e.type==='AIS_DARK').length,c:'#E53E3E'},{l:'Speed Anomaly',v:events.filter(e=>e.type==='SPEED_ANOMALY').length,c:'#F0A500'},{l:'STS Transfer',v:events.filter(e=>e.type==='STS_TRANSFER').length,c:'#F0A500'},{l:'Zone Breach',v:events.filter(e=>e.type==='GEOFENCE_BREACH').length,c:'#FF6B35'}].map(({l,v,c})=>`<div class="sc" style="border-top-color:${c}"><div class="sl">${l}</div><div class="sv" style="color:${c}">${v}</div></div>`).join('');
+  const el=document.getElementById('evlist');
+  el.innerHTML=events.length===0?'<div style="color:#3A5E7A;font-size:10px;font-family:monospace;text-align:center;padding:20px">MONITORING...</div>':events.map(ev=>{const col=SC[ev.sev]||'#7BA8CC';return`<div class="ec" style="border-left-color:${col}"><div class="etp"><span style="font-size:9px;font-family:monospace;font-weight:700;color:${col}">${ev.type}</span><span style="color:#3A5E7A;font-size:8px;font-family:monospace">${new Date(ev.ts).toLocaleTimeString()}</span></div><div style="color:#E8F4FF;font-size:10px">${ev.vname}</div><div style="color:#3A5E7A;font-size:8px;font-family:monospace">${ev.vid}</div></div>`;}).join('');
+  document.getElementById('evstats').innerHTML=[{l:'Total Events',v:events.length,c:'#0EA5E9'},{l:'Critical/High',v:events.filter(e=>['CRITICAL','HIGH'].includes(e.sev)).length,c:'#E53E3E'},{l:'AIS Dark',v:events.filter(e=>e.type==='AIS_DARK').length,c:'#E53E3E'},{l:'Speed Anomaly',v:events.filter(e=>e.type==='SPEED_ANOMALY').length,c:'#F0A500'},{l:'STS Transfer',v:events.filter(e=>e.type==='STS_TRANSFER').length,c:'#F0A500'},{l:'Zone Breach',v:events.filter(e=>e.type==='GEOFENCE_BREACH').length,c:'#FF6B35'}].map(({l,v,c})=>`<div class="sc" style="border-top-color:${c}"><div class="sl">${l}</div><div class="sv" style="color:${c}">${v}</div></div>`).join('');
 }
 
 // ── CARGO ─────────────────────────────────────────────────────
@@ -564,26 +766,27 @@ function renderCargo(){
   const cts={};vessels.forEach(v=>{cts[v.cargo]=(cts[v.cargo]||0)+1;});
   const sorted=Object.entries(cts).sort((a,b)=>b[1]-a[1]);
   const cols=['#F0A500','#0EA5E9','#8B5CF6','#16A34A','#E53E3E','#FF6B35','#FFD166','#7BA8CC','#06D6A0','#118AB2'];
-  document.getElementById('cbars').innerHTML=sorted.map(([cargo,count],i)=>{const pct=((count/vessels.length)*100).toFixed(1);const col=cols[i%10];return`<div class="br"><div class="bls"><span class="bn">${cargo}</span><span class="bv" style="color:${col}">${count} (${pct}%)</span></div><div class="bb"><div class="bf" style="width:${pct}%;background:${col}"></div></div></div>`;}).join('');
-  document.getElementById('etal').innerHTML=vessels.map(v=>{const e=getETA(v);return`<div class="er" onclick="selV('${v.id}')"><div><div class="en">${v.name}</div><div class="esb">${v.cargo} · ${v.flag}</div></div><div><div class="ed">${e.dist.toLocaleString()} NM</div><div class="eds">ETA ${e.days}d</div></div></div>`;}).join('');
+  document.getElementById('cbars').innerHTML=sorted.map(([cargo,count],i)=>{const pct=((count/vessels.length)*100).toFixed(1);const col=cols[i%10];return`<div class="br"><div class="bls"><span class="bname">${cargo}</span><span class="bval" style="color:${col}">${count} (${pct}%)</span></div><div class="bbg"><div class="bfill" style="width:${pct}%;background:${col}"></div></div></div>`;}).join('');
+  document.getElementById('etal').innerHTML=vessels.map(v=>{const e=getETA(v);return`<div class="erow" onclick="selV('${v.id}')"><div style="flex:1;min-width:0"><div style="color:#E8F4FF;font-size:10px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${v.name}</div><div style="color:#3A5E7A;font-size:8px;font-family:monospace">${v.cargo} · ${v.flag}</div></div><div style="text-align:right;flex-shrink:0"><div style="color:#F0A500;font-size:10px;font-family:monospace">${e.dist.toLocaleString()} NM</div><div style="color:#3A5E7A;font-size:8px;font-family:monospace">ETA ${e.days}d</div></div></div>`;}).join('');
 }
 
 // ── INTEL ─────────────────────────────────────────────────────
 function renderIntel(){
-  const dark=vessels.filter(v=>v.status==='DARK');
-  const sts=vessels.filter(v=>v.status==='STS_OPERATION');
-  document.getElementById('dkl').innerHTML=dark.length===0?'<div style="color:#3A5E7A;font-size:10px;font-family:monospace">No dark vessels</div>':dark.map(v=>`<div class="dr" style="background:rgba(107,28,28,.2);border:1px solid rgba(229,62,62,.3)" onclick="selV('${v.id}')"><div><div class="drn">${v.name}</div><div class="drs">${v.id} · ${v.flag}</div></div><span style="color:#E53E3E;font-size:9px;font-family:monospace">DARK</span></div>`).join('');
-  document.getElementById('stsl').innerHTML=sts.length===0?'<div style="color:#3A5E7A;font-size:10px;font-family:monospace">No active STS</div>':sts.map(v=>`<div class="dr" style="background:rgba(240,165,0,.08);border:1px solid #7A5300" onclick="selV('${v.id}')"><div><div class="drn">${v.name}</div><div class="drs">${v.id} · ${v.cargo}</div></div><span style="color:#F0A500;font-size:9px;font-family:monospace">STS</span></div>`).join('');
-  const brs=breaches();
+  const dark=vessels.filter(v=>v.status==='DARK'),sts=vessels.filter(v=>v.status==='STS_OPERATION'),brs=getBr();
+  document.getElementById('dklist').innerHTML=dark.length===0?'<div style="color:#3A5E7A;font-size:10px;font-family:monospace">No dark vessels</div>':dark.map(v=>`<div class="itr" style="background:rgba(107,28,28,.2);border:1px solid rgba(229,62,62,.3)" onclick="selV('${v.id}')"><div><div style="color:#E8F4FF;font-size:11px">${v.name}</div><div style="color:#3A5E7A;font-size:9px;font-family:monospace">${v.flag} · ${v.cargo}</div></div><span style="color:#E53E3E;font-size:9px;font-family:monospace">DARK</span></div>`).join('');
+  document.getElementById('stslist').innerHTML=sts.length===0?'<div style="color:#3A5E7A;font-size:10px;font-family:monospace">No active STS</div>':sts.map(v=>`<div class="itr" style="background:rgba(240,165,0,.08);border:1px solid #7A5300" onclick="selV('${v.id}')"><div><div style="color:#E8F4FF;font-size:11px">${v.name}</div><div style="color:#3A5E7A;font-size:9px;font-family:monospace">${v.cargo}</div></div><span style="color:#F0A500;font-size:9px;font-family:monospace">STS</span></div>`).join('');
   document.getElementById('igrd').innerHTML=[{l:'Dark',v:dark.length,c:dark.length?'#E53E3E':'#3A5E7A'},{l:'STS',v:sts.length,c:sts.length?'#F0A500':'#3A5E7A'},{l:'Anomalous',v:vessels.filter(v=>v.anomalies.length>0).length,c:'#F0A500'},{l:'Zone Alerts',v:brs.length,c:brs.length?'#E53E3E':'#3A5E7A'},{l:'Events',v:events.length,c:'#0EA5E9'},{l:'Fleet',v:vessels.length,c:'#16A34A'}].map(({l,v,c})=>`<div class="igc"><div class="igv" style="color:${c}">${v}</div><div class="igl">${l}</div></div>`).join('');
-  document.getElementById('iznl').innerHTML=GZ.map(z=>{const zc=brs.filter(b=>b.zid===z.id).length;const col=z.risk==='CRITICAL'?'#E53E3E':z.risk==='HIGH'?'#F0A500':'#0EA5E9';return`<div class="zr"><div><div class="zn">${z.name}</div><div class="zrk" style="color:${col}">${z.risk}</div></div><div class="zcnt" style="color:${zc?col:'#3A5E7A'}">${zc}</div></div>`;}).join('');
+  document.getElementById('izone').innerHTML=GZ.map(z=>{const zc=brs.filter(b=>b.zid===z.id).length;const col=z.risk==='CRITICAL'?'#E53E3E':z.risk==='HIGH'?'#F0A500':'#0EA5E9';return`<div class="zrow"><div><div style="color:#E8F4FF;font-size:10px">${z.name}</div><div style="color:${col};font-size:8px;font-family:monospace">${z.risk}</div></div><div style="color:${zc?col:'#3A5E7A'};font-size:15px;font-family:monospace;font-weight:700">${zc}</div></div>`;}).join('');
 }
 
 // ── MAIN LOOP ─────────────────────────────────────────────────
+let lastDraw=0;
 function tick(){
   vessels=vessels.map(v=>updV(v));
-  if(selId&&curTab==='map'){const v=vessels.find(vv=>vv.id===selId);if(v)renderDetail(v);}
-  drawMap();updKPI();
+  if(selId&&curTab==='map'){const v=vessels.find(vv=>vv.id===selId);if(v)renderDtl(v);}
+  const now=Date.now();
+  if(now-lastDraw>UMS-100){draw();lastDraw=now;}
+  updKPI();
   if(curTab==='fleet')renderFleet();
   if(curTab==='events')renderEvents();
   if(curTab==='cargo')renderCargo();
@@ -595,22 +798,31 @@ function anomTick(){
   const fa=types[Math.floor(Math.random()*4)];
   const idx=Math.floor(Math.random()*vessels.length);
   vessels[idx]=updV(vessels[idx],fa);
-  const v=vessels[idx];const a=v.anomalies[v.anomalies.length-1];
+  const v=vessels[idx],a=v.anomalies[v.anomalies.length-1];
   if(a)events=[{id:Date.now(),vid:v.id,vname:v.name,type:a.type,sev:a.sev,ts:a.ts},...events].slice(0,60);
 }
 
-function updClock(){document.getElementById('clk').textContent=new Date().toUTCString().slice(0,25)+' UTC';}
+// Smooth animation loop for dark vessel pulse
+let raf;
+function animate(){
+  if(vessels.some(v=>v.status==='DARK'||v.id===selId)){
+    const now=Date.now();
+    if(now-lastDraw>80){draw();lastDraw=now;}
+  }
+  raf=requestAnimationFrame(animate);
+}
 
-// ── INIT ─────────────────────────────────────────────────────
+function updClock(){document.getElementById('clk').textContent=new Date().toUTCString().slice(5,25)+' UTC';}
+
+// ── INIT ──────────────────────────────────────────────────────
 vessels=Array.from({length:VC},(_,i)=>initV(i));
-resizeCanvas();
-window.addEventListener('resize',()=>{resizeCanvas();drawMap();});
-drawMap();updKPI();updClock();
+resize();
+window.addEventListener('resize',()=>{resize();draw();});
+draw();updKPI();updClock();
 setInterval(tick,UMS);
 setInterval(anomTick,AMS);
 setInterval(updClock,1000);
-// Animate dark pulse rings smoothly
-setInterval(()=>{if(vessels.some(v=>v.status==='DARK'))drawMap();},100);
+animate();
 </script>
 </body>
 </html>
